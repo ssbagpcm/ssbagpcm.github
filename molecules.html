@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Pure CSS Animated 3D Molecules (alpha)</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="./z.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<ul class='atoms set'>
+  <li class='atom O'></li>
+  <li class='atom H'></li>
+  <li class='atom C'></li>
+  <li class='atom N'></li>
+  <li class='atom Cl'></li>
+</ul>
+<ul class='molecules set'>
+	<li class='molecule-wrap'>
+    <div class='info'>water (H<sub>2</sub>O)</div>
+		<ul class='molecule H2O'>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom O'></li>
+		</ul>
+	</li>
+	<li class='molecule-wrap'>
+    <div class='info'>carbon dioxide (CO<sub>2</sub>)</div>
+		<ul class='molecule CO2'>
+			<li class='atom C'></li>
+			<li class='atom O'></li>
+			<li class='atom O'></li>
+		</ul>
+	</li>
+	<li class='molecule-wrap'>
+    <div class='info'>hydrogen cyanide (HCN)</div>
+		<ul class='molecule HCN'>
+			<li class='atom H'></li>
+			<li class='atom C'></li>
+			<li class='atom N'></li>
+		</ul>
+	</li>
+	<li class='molecule-wrap'>
+    <div class='info'>ammonia (NH<sub>3</sub>)</div>
+		<ul class='molecule NH3'>
+			<li class='atom N'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+      <li class='atom H'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>methane (CH<sub>4</sub>)</div>
+		<ul class='molecule CH4'>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+      <li class='atom H'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>formaldehyde (CH<sub>2</sub>O)</div>
+		<ul class='molecule CH2O'>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom O'></li>
+		</ul>
+	</li>
+	<li class='molecule-wrap'>
+    <div class='info'>carbon tetrachloride (CCl<sub>4</sub>)</div>
+		<ul class='molecule CCl4'>
+			<li class='atom C'></li>
+			<li class='atom Cl'></li>
+			<li class='atom Cl'></li>
+			<li class='atom Cl'></li>
+			<li class='atom Cl'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>methyl chloride (CH<sub>3</sub>Cl)</div>
+		<ul class='molecule CH3Cl'>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom Cl'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>acetylene (C<sub>2</sub>H<sub>2</sub>)</div>
+		<ul class='molecule C2H2'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>ethylene (C<sub>2</sub>H<sub>4)</sub></div>
+		<ul class='molecule C2H4'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+      <li class='atom H'></li>
+			<li class='atom H'></li>
+		</ul>
+	</li>
+	<li class='molecule-wrap'>
+    <div class='info'>ethane (C<sub>2</sub>H<sub>6)</sub></div>
+		<ul class='molecule C2H6'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>acetonitrile (C<sub>2</sub>H<sub>3</sub>N)</div>
+		<ul class='molecule C2H3N'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom N'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>acetic acid (C<sub>2</sub>H<sub>4</sub>O<sub>2</sub>)</div>
+		<ul class='molecule C2H4O2'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom O'></li>
+			<li class='atom O'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>glycolaldehyde (C<sub>2</sub>H<sub>4</sub>O<sub>2</sub>)</div>
+		<ul class='molecule C2H4O2b'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom O'></li>
+			<li class='atom O'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>methyl formate (C<sub>2</sub>H<sub>4</sub>O<sub>2</sub>)</div>
+		<ul class='molecule C2H4O2c'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom O'></li>
+			<li class='atom O'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>acetaldehyde (C<sub>2</sub>H<sub>4</sub>O)</div>
+		<ul class='molecule C2H4O'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom O'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>vinyl alcohol (C<sub>2</sub>H<sub>4</sub>O)</div>
+		<ul class='molecule C2H4Ob'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom O'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>ethylene oxide (C<sub>2</sub>H<sub>4</sub>O)</div>
+		<ul class='molecule C2H4Oc'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom O'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>ethanol (C<sub>2</sub>H<sub>6</sub>O)</div>
+		<ul class='molecule C2H6O'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+      <li class='atom O'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>dimethyl ether (C<sub>2</sub>H<sub>6</sub>O)</div>
+		<ul class='molecule C2H6Ob'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+      <li class='atom O'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>ethylene glycol (C<sub>2</sub>H<sub>6</sub>O<sub>2</sub>)</div>
+		<ul class='molecule C2H6O2'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+      <li class='atom O'></li>
+      <li class='atom O'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>glycolonitrile (C<sub>2</sub>H<sub>3</sub>NO)</div>
+		<ul class='molecule C2H3NO'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom N'></li>
+      <li class='atom O'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>methyl isocyanate (C<sub>2</sub>H<sub>3</sub>NO)</div>
+		<ul class='molecule C2H3NOb'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom N'></li>
+      <li class='atom O'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>cyclopropane (C<sub>3</sub>H<sub>6</sub>)</div>
+		<ul class='molecule C3H6'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>propylene (C<sub>3</sub>H<sub>6</sub>)</div>
+		<ul class='molecule C3H6b'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>α-butylene (C<sub>4</sub>H<sub>8</sub>)</div>
+		<ul class='molecule C4H8'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+      <li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+      <li class='atom H'></li>
+      <li class='atom H'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>Z-β-butylene (C<sub>4</sub>H<sub>8</sub>)</div>
+		<ul class='molecule C4H8b'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+      <li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+      <li class='atom H'></li>
+      <li class='atom H'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>E-β-butylene (C<sub>4</sub>H<sub>8</sub>)</div>
+		<ul class='molecule C4H8c'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+      <li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+      <li class='atom H'></li>
+      <li class='atom H'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>isobutylene (C<sub>4</sub>H<sub>8</sub>)</div>
+		<ul class='molecule C4H8d'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+      <li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+      <li class='atom H'></li>
+      <li class='atom H'></li>
+		</ul>
+	</li>
+	<li class='molecule-wrap'>
+    <div class='info'>benzene (C<sub>6</sub>H<sub>6</sub>)</div>
+		<ul class='molecule C6H6'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+		</ul>
+	</li>
+	<li class='molecule-wrap'>
+    <div class='info'>cyclohexane (C<sub>6</sub>H<sub>12</sub>)</div>
+		<ul class='molecule C6H12'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+		</ul>
+	</li>
+  <li class='molecule-wrap'>
+    <div class='info'>methylcyclopentane (C<sub>6</sub>H<sub>12</sub>)</div>
+		<ul class='molecule C6H12b'>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom C'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+			<li class='atom H'></li>
+		</ul>
+	</li>
+</ul>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>

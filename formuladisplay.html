@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Formula display</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
+        <script>
+        function ready() {
+            formula = localStorage["formula"];
+            body = document.getElementById("body");
+			//body.setAttribute("zoom", localStorage["fzoom"] + "%");
+            body.innerHTML = "`"+formula+"`";
+        }
+        </script>
+		<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { scale: parseFloat(localStorage["fzoom"])}
+  });
+</script>
+    </head>
+    <body id="body" onload="ready();"></body>
+</html>

@@ -1,0 +1,1033 @@
+html {
+  background: black;
+  font: 100% Arial Narrow, sans-serif;
+}
+
+body {
+  margin: 0;
+  color: silver;
+}
+
+.set > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+ul li {
+  margin: 2em;
+}
+
+.atom {
+  border-radius: 50%;
+  transform-style: preserve-3d;
+  color: black;
+}
+.atom:before {
+  display: block;
+  border-radius: 50%;
+  background: radial-gradient(circle at 25% 25%, #ffffff, rgba(255, 255, 255, 0));
+  content: '';
+}
+.molecules .atom:before {
+  animation: rotr 4s linear infinite;
+  animation-play-state: paused;
+}
+.atom:after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+}
+.atom[class*=O]:before {
+  width: 3.55em;
+  height: 3.55em;
+  background-color: #193987;
+}
+.atoms .atom[class*=O]:after {
+  font: 700 1.25em Arial Narrow;
+  line-height: 2.84em;
+  content: "O";
+}
+.atom[class*=H]:before {
+  width: 1.6em;
+  height: 1.6em;
+  background-color: #da240e;
+}
+.atoms .atom[class*=H]:after {
+  font: 700 1.25em Arial Narrow;
+  line-height: 1.28em;
+  content: "H";
+}
+.atom[class*=C]:before {
+  width: 3.1em;
+  height: 3.1em;
+  background-color: #fb9a00;
+}
+.atoms .atom[class*=C]:after {
+  font: 700 1.25em Arial Narrow;
+  line-height: 2.48em;
+  content: "C";
+}
+.atom[class*=N]:before {
+  width: 3.15em;
+  height: 3.15em;
+  background-color: #05ca09;
+}
+.atoms .atom[class*=N]:after {
+  font: 700 1.25em Arial Narrow;
+  line-height: 2.52em;
+  content: "N";
+}
+.atom[class*=Cl]:before {
+  width: 3.7em;
+  height: 3.7em;
+  background-color: #ba31fb;
+}
+.atoms .atom[class*=Cl]:after {
+  font: 700 1.25em Arial Narrow;
+  line-height: 2.96em;
+  content: "Cl";
+}
+
+.molecule-wrap {
+  perspective: 32em;
+}
+
+.molecule {
+  min-width: 10em;
+  min-height: 10em;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: rot 4s linear infinite;
+  animation-play-state: paused;
+  pointer-events: none;
+}
+.molecule .atom {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+.molecule .atom[class*=O] {
+  margin: -1.775em;
+}
+.molecule .atom[class*=H] {
+  margin: -0.8em;
+}
+.molecule .atom[class*=C] {
+  margin: -1.55em;
+}
+.molecule .atom[class*=N] {
+  margin: -1.575em;
+}
+.molecule .atom[class*=Cl] {
+  margin: -1.85em;
+}
+.molecule-wrap:hover .molecule, .molecule-wrap:hover .molecule .atom:before {
+  animation-play-state: running;
+}
+
+@keyframes rot {
+  to {
+    transform: rotate(360deg) rotateY(360deg) rotateX(360deg);
+  }
+}
+@keyframes rotr {
+  to {
+    transform: rotateX(-360deg) rotateY(-360deg) rotate(-360deg);
+  }
+}
+.H2O .O {
+  transform: translateZ(-1em);
+}
+.H2O .H:nth-of-type(1) {
+  transform: translateZ(-1em) rotateY(-52.225deg) translateZ(2.575em) rotateY(52.225deg);
+}
+.H2O .H:nth-of-type(2) {
+  transform: translateZ(-1em) rotateY(52.225deg) translateZ(2.575em) rotateY(-52.225deg);
+}
+
+.CO2 {
+  /* linear molecule */
+}
+.CO2 .C {
+  transform: translateZ(-1em);
+}
+.CO2 .O:nth-of-type(2) {
+  transform: translateZ(-1em) translateX(-3.325em);
+}
+.CO2 .O:nth-of-type(3) {
+  transform: translateZ(-1em) translateX(3.325em);
+}
+
+.HCN {
+  /* linear molecule */
+}
+.HCN .C {
+  transform: translateZ(-1em);
+}
+.HCN .H {
+  transform: translateZ(-1em) translateX(-2.35em);
+}
+.HCN .N {
+  transform: translateZ(-1em) translateX(3.125em);
+}
+
+.NH3 {
+  /* 27.5942deg = asin(sin(106.7deg/2)/sqrt(3)) */
+}
+.NH3 .N {
+  transform: translateZ(-1em);
+}
+.NH3 .H:nth-of-type(2) {
+  transform: translateZ(-1em) rotateY(120deg) rotateX(-27.5942deg) translateZ(2.375em) rotateX(27.5942deg) rotateY(-120deg);
+}
+.NH3 .H:nth-of-type(3) {
+  transform: translateZ(-1em) rotateY(240deg) rotateX(-27.5942deg) translateZ(2.375em) rotateX(27.5942deg) rotateY(-240deg);
+}
+.NH3 .H:nth-of-type(4) {
+  transform: translateZ(-1em) rotateY(360deg) rotateX(-27.5942deg) translateZ(2.375em) rotateX(27.5942deg) rotateY(-360deg);
+}
+
+.CH4 {
+  /* 28.13deg = asin(sin(109.5deg/2)/sqrt(3)) */
+}
+.CH4 .C {
+  transform: translateZ(-1em);
+}
+.CH4 .H:nth-of-type(2) {
+  transform: translateZ(-1em) rotateY(120deg) rotateX(-28.13deg) translateZ(2.35em) rotateX(28.13deg) rotateY(-120deg);
+}
+.CH4 .H:nth-of-type(3) {
+  transform: translateZ(-1em) rotateY(240deg) rotateX(-28.13deg) translateZ(2.35em) rotateX(28.13deg) rotateY(-240deg);
+}
+.CH4 .H:nth-of-type(4) {
+  transform: translateZ(-1em) rotateY(360deg) rotateX(-28.13deg) translateZ(2.35em) rotateX(28.13deg) rotateY(-360deg);
+}
+.CH4 .H:last-of-type {
+  transform: translateZ(-1em) rotateX(90deg) translateZ(2.35em) rotateX(-90deg);
+}
+
+.CH2O .C {
+  transform: translateZ(-1em);
+}
+.CH2O .H:nth-of-type(2) {
+  transform: translateZ(-1em) rotate(-60deg) translate(-2.35em) rotate(60deg);
+}
+.CH2O .H:nth-of-type(3) {
+  transform: translateZ(-1em) rotate(60deg) translate(-2.35em) rotate(-60deg);
+}
+.CH2O .O:last-of-type {
+  transform: translateZ(-1em) rotateY(90deg) translateZ(3.325em) rotateY(-90deg);
+}
+
+.CCl4 {
+  /* 28.13deg = asin(sin(109.5deg/2)/sqrt(3)) */
+}
+.CCl4 .C {
+  transform: translateZ(-1em);
+}
+.CCl4 .Cl:nth-of-type(2) {
+  transform: translateZ(-1em) rotateY(120deg) rotateX(-28.13deg) translateZ(3.4em) rotateX(28.13deg) rotateY(-120deg);
+}
+.CCl4 .Cl:nth-of-type(3) {
+  transform: translateZ(-1em) rotateY(240deg) rotateX(-28.13deg) translateZ(3.4em) rotateX(28.13deg) rotateY(-240deg);
+}
+.CCl4 .Cl:nth-of-type(4) {
+  transform: translateZ(-1em) rotateY(360deg) rotateX(-28.13deg) translateZ(3.4em) rotateX(28.13deg) rotateY(-360deg);
+}
+.CCl4 .Cl:last-of-type {
+  transform: translateZ(-1em) rotateX(90deg) translateZ(3.4em) rotateX(-90deg);
+}
+
+.CH3Cl {
+  /* 27.8453deg = asin(sin(108deg/2)/sqrt(3)) */
+}
+.CH3Cl .C {
+  transform: translateZ(-1em);
+}
+.CH3Cl .H:nth-of-type(2) {
+  transform: translateZ(-1em) rotateY(120deg) rotateX(-27.8453deg) translateZ(2.35em) rotateX(27.8453deg) rotateY(-120deg);
+}
+.CH3Cl .H:nth-of-type(3) {
+  transform: translateZ(-1em) rotateY(240deg) rotateX(-27.8453deg) translateZ(2.35em) rotateX(27.8453deg) rotateY(-240deg);
+}
+.CH3Cl .H:nth-of-type(4) {
+  transform: translateZ(-1em) rotateY(360deg) rotateX(-27.8453deg) translateZ(2.35em) rotateX(27.8453deg) rotateY(-360deg);
+}
+.CH3Cl .Cl:last-child {
+  transform: translateZ(-1em) rotateX(90deg) translateZ(3.4em) rotateX(-90deg);
+}
+
+.C2H2 {
+  /* linear molecule */
+}
+.C2H2 .C:nth-of-type(1) {
+  transform: translateX(-1.55em);
+}
+.C2H2 .H:nth-of-type(3) {
+  transform: translateX(-3.9em);
+}
+.C2H2 .C:nth-of-type(2) {
+  transform: translateX(1.55em);
+}
+.C2H2 .H:nth-of-type(4) {
+  transform: translateX(3.9em);
+}
+
+.C2H4 .C:nth-of-type(1) {
+  transform: translateX(-1.55em);
+}
+.C2H4 .H:nth-of-type(3) {
+  transform: translateX(-1.55em) rotate(120deg) translate(2.35em) rotate(-120deg);
+}
+.C2H4 .H:nth-of-type(4) {
+  transform: translateX(-1.55em) rotate(-120deg) translate(2.35em) rotate(120deg);
+}
+.C2H4 .C:nth-of-type(2) {
+  transform: translateX(1.55em);
+}
+.C2H4 .H:nth-of-type(5) {
+  transform: translateX(1.55em) rotate(120deg) translate(-2.35em) rotate(-120deg);
+}
+.C2H4 .H:nth-of-type(6) {
+  transform: translateX(1.55em) rotate(-120deg) translate(-2.35em) rotate(120deg);
+}
+
+.C2H6 {
+  /* 28.13deg = asin(sin(109.5deg/2)/sqrt(3)) */
+}
+.C2H6 .C:nth-of-type(1) {
+  transform: translateX(-1.55em);
+}
+.C2H6 .H:nth-of-type(3) {
+  transform: translateX(-1.55em) rotateX(300deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-300deg);
+}
+.C2H6 .H:nth-of-type(4) {
+  transform: translateX(-1.55em) rotateX(420deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-420deg);
+}
+.C2H6 .H:nth-of-type(5) {
+  transform: translateX(-1.55em) rotateX(540deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-540deg);
+}
+.C2H6 .C:nth-of-type(2) {
+  transform: translateX(1.55em);
+}
+.C2H6 .H:nth-of-type(6) {
+  transform: translateX(1.55em) rotateX(480deg) rotateY(28.13deg) translateZ(2.35em) rotateY(-28.13deg) rotateX(-480deg);
+}
+.C2H6 .H:nth-of-type(7) {
+  transform: translateX(1.55em) rotateX(600deg) rotateY(28.13deg) translateZ(2.35em) rotateY(-28.13deg) rotateX(-600deg);
+}
+.C2H6 .H:nth-of-type(8) {
+  transform: translateX(1.55em) rotateX(720deg) rotateY(28.13deg) translateZ(2.35em) rotateY(-28.13deg) rotateX(-720deg);
+}
+
+.C2H3N {
+  /* 28.13deg = asin(sin(109.5deg/2)/sqrt(3)) */
+}
+.C2H3N .C:nth-of-type(1) {
+  transform: translateX(-1.55em);
+}
+.C2H3N .C:nth-of-type(2) {
+  transform: translateX(1.55em);
+}
+.C2H3N .H:nth-of-type(3) {
+  transform: translateX(-1.55em) rotateX(120deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-120deg);
+}
+.C2H3N .H:nth-of-type(4) {
+  transform: translateX(-1.55em) rotateX(240deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-240deg);
+}
+.C2H3N .H:nth-of-type(5) {
+  transform: translateX(-1.55em) rotateX(360deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-360deg);
+}
+.C2H3N .N {
+  transform: translateX(4.675em);
+}
+
+.C2H4O2 {
+  /* 28.13deg = asin(sin(109.5deg/2)/sqrt(3)) */
+}
+.C2H4O2 .C:nth-of-type(1) {
+  transform: translateX(-1.55em);
+}
+.C2H4O2 .O:nth-of-type(7) {
+  transform: translateX(1.55em) rotate(-54.5deg) translate(3.325em) rotate(54.5deg);
+}
+.C2H4O2 .C:nth-of-type(2) {
+  transform: translateX(1.55em);
+}
+.C2H4O2 .O:nth-of-type(8) {
+  transform: translateX(1.55em) rotate(69.5deg) translate(3.325em) rotate(-69.5deg);
+}
+.C2H4O2 .H:nth-of-type(3) {
+  transform: translateX(-1.55em) rotateX(30deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-30deg);
+}
+.C2H4O2 .H:nth-of-type(4) {
+  transform: translateX(-1.55em) rotateX(150deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-150deg);
+}
+.C2H4O2 .H:nth-of-type(5) {
+  transform: translateX(-1.55em) rotateX(270deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-270deg);
+}
+.C2H4O2 .H:nth-of-type(6) {
+  transform: translateX(1.55em) rotate(69.5deg) translate(3.325em) rotate(-75deg) translate(2.575em) rotate(5.5deg);
+}
+
+.C2H4O2b .C:nth-of-type(1) {
+  transform: translateX(-1.55em);
+}
+.C2H4O2b .O:nth-of-type(7) {
+  transform: translateX(-1.55em) rotate(-111.6deg) translate(3.325em) rotate(111.6deg);
+}
+.C2H4O2b .H:nth-of-type(3) {
+  transform: translateX(-1.55em) rotateX(-60deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(60deg);
+}
+.C2H4O2b .C:nth-of-type(2) {
+  transform: translateX(1.55em);
+}
+.C2H4O2b .O:nth-of-type(8) {
+  transform: translateX(1.55em) rotate(121.3deg) translate(-3.325em) rotate(-121.3deg);
+}
+.C2H4O2b .H:nth-of-type(4) {
+  transform: translateX(-1.55em) rotateX(-120deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(120deg);
+}
+.C2H4O2b .H:nth-of-type(5) {
+  transform: translateX(-1.55em) rotate(-111.6deg) translate(3.325em) rotate(111.6deg) rotate(-36.6deg) translate(2.575em) rotate(36.6deg);
+}
+.C2H4O2b .H:nth-of-type(6) {
+  transform: translateX(1.55em) rotate(60deg) translate(2.35em) rotate(-60deg);
+}
+
+.C2H4O2c {
+  /* 28.3562deg = asin(sin(110.7deg/2)/sqrt(3)) */
+}
+.C2H4O2c .C:nth-of-type(1) {
+  transform: translateZ(-1em) rotate(32.6deg) translate(-3.325em) rotate(-32.6deg);
+}
+.C2H4O2c .C:nth-of-type(2) {
+  transform: translateZ(-1em) rotate(147.4deg) translate(-3.325em) rotate(-147.4deg);
+}
+.C2H4O2c .H:nth-of-type(3) {
+  transform: translateZ(-1em) rotate(-32.6deg) translate(3.325em) rotate(32.6deg) rotateX(30deg) rotateY(28.3562deg) translateZ(2.35em) rotateY(-28.3562deg) rotateX(-30deg);
+}
+.C2H4O2c .H:nth-of-type(4) {
+  transform: translateZ(-1em) rotate(-32.6deg) translate(3.325em) rotate(32.6deg) rotateX(150deg) rotateY(28.3562deg) translateZ(2.35em) rotateY(-28.3562deg) rotateX(-150deg);
+}
+.C2H4O2c .H:nth-of-type(5) {
+  transform: translateZ(-1em) rotate(-32.6deg) translate(3.325em) rotate(32.6deg) rotateX(270deg) rotateY(28.3562deg) translateZ(2.35em) rotateY(-28.3562deg) rotateX(-270deg);
+}
+.C2H4O2c .H:nth-of-type(6) {
+  transform: translateZ(-1em) rotate(32.6deg) translate(-3.325em) rotate(109.3deg) translate(2.35em) rotate(-141.9deg);
+}
+.C2H4O2c .O:nth-of-type(7) {
+  transform: translateZ(-1em) rotate(32.6deg) translate(-3.325em) rotate(-125.9deg) translate(3.325em) rotate(93.3deg);
+}
+.C2H4O2c .O:nth-of-type(8) {
+  transform: translateZ(-1em);
+}
+
+.C2H4O {
+  /* 28.13deg = asin(sin(109.5deg/2)/sqrt(3)) */
+}
+.C2H4O .C:nth-of-type(1) {
+  transform: translate(-1.55em);
+}
+.C2H4O .C:nth-of-type(2) {
+  transform: translate(1.55em);
+}
+.C2H4O .H:nth-of-type(3) {
+  transform: translate(-1.55em) rotateX(210deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-210deg);
+}
+.C2H4O .H:nth-of-type(4) {
+  transform: translate(-1.55em) rotateX(330deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-330deg);
+}
+.C2H4O .H:nth-of-type(5) {
+  transform: translate(-1.55em) rotateX(450deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-450deg);
+}
+.C2H4O .H:nth-of-type(6) {
+  transform: translate(1.55em) rotate(62.5deg) translate(2.35em) rotate(-62.5deg);
+}
+.C2H4O .O {
+  transform: translate(1.55em) rotate(-56.1deg) translate(3.325em) rotate(56.1deg);
+}
+
+.C2H4Ob {
+  /* 28.13deg = asin(sin(109.5deg/2)/sqrt(3)) */
+}
+.C2H4Ob .C:nth-of-type(1) {
+  transform: translate(-1.55em);
+}
+.C2H4Ob .H:nth-of-type(3) {
+  transform: translate(-1.55em) rotate(120deg) translate(2.35em) rotate(-120deg);
+}
+.C2H4Ob .C:nth-of-type(2) {
+  transform: translate(1.55em);
+}
+.C2H4Ob .H:nth-of-type(4) {
+  transform: translate(-1.55em) rotate(240deg) translate(2.35em) rotate(-240deg);
+}
+.C2H4Ob .H:nth-of-type(5) {
+  transform: translate(1.55em) rotate(60deg) translate(2.35em) rotate(-60deg);
+}
+.C2H4Ob .H:nth-of-type(6) {
+  transform: translate(1.55em) rotate(-60deg) translate(3.325em) rotate(70.5deg) translate(2.575em) rotate(-10.5deg);
+}
+.C2H4Ob .O {
+  transform: translate(1.55em) rotate(-60deg) translate(3.325em) rotate(60deg);
+}
+
+.C2H4Oc .C:nth-of-type(1) {
+  transform: translate(-1.55em);
+}
+.C2H4Oc .H:nth-of-type(3) {
+  transform: translate(-1.55em) rotate(120deg) rotateY(-116.75deg) translate(-2.35em) rotateY(116.75deg) rotate(-120deg);
+}
+.C2H4Oc .H:nth-of-type(4) {
+  transform: translate(-1.55em) rotate(120deg) rotateY(116.75deg) translate(-2.35em) rotateY(-116.75deg) rotate(-120deg);
+}
+.C2H4Oc .C:nth-of-type(2) {
+  transform: translate(1.55em);
+}
+.C2H4Oc .H:nth-of-type(5) {
+  transform: translate(1.55em) rotate(240deg) rotateY(-116.75deg) translate(2.35em) rotateY(116.75deg) rotate(-240deg);
+}
+.C2H4Oc .H:nth-of-type(6) {
+  transform: translate(1.55em) rotate(240deg) rotateY(116.75deg) translate(2.35em) rotateY(-116.75deg) rotate(-240deg);
+}
+.C2H4Oc .O {
+  transform: translateY(-2.99263em);
+}
+
+.C2H6O {
+  /* 28.13deg = asin(sin(109.5deg/2)/sqrt(3)) */
+}
+.C2H6O .C:nth-of-type(1) {
+  transform: translateX(-1.55em);
+}
+.C2H6O .H:nth-of-type(3) {
+  transform: translateX(-1.55em) rotateX(300deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-300deg);
+}
+.C2H6O .H:nth-of-type(4) {
+  transform: translateX(-1.55em) rotateX(420deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-420deg);
+}
+.C2H6O .H:nth-of-type(5) {
+  transform: translateX(-1.55em) rotateX(540deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-540deg);
+}
+.C2H6O .C:nth-of-type(2) {
+  transform: translateX(1.55em);
+}
+.C2H6O .H:nth-of-type(6) {
+  transform: translateX(1.55em) rotateX(480deg) rotateY(28.13deg) translateZ(2.35em) rotateY(-28.13deg) rotateX(-480deg);
+}
+.C2H6O .H:nth-of-type(7) {
+  transform: translateX(1.55em) rotateX(600deg) rotateY(28.13deg) translateZ(2.35em) rotateY(-28.13deg) rotateX(-600deg);
+}
+.C2H6O .H:nth-of-type(8) {
+  transform: translateX(1.55em) rotateX(720deg) rotateY(28.13deg) translateZ(2.35em) rotateY(-28.13deg) rotateX(-720deg);
+}
+.C2H6O .H:nth-of-type(8) {
+  transform: translate(1.55em) rotateY(107.8deg) translate(-3.325em) rotateY(-105.4deg) translate(2.575em) rotateY(-2.4deg);
+}
+.C2H6O .O {
+  transform: translate(1.55em) rotateY(107.8deg) translate(-3.325em) rotateY(-107.8deg);
+}
+
+.C2H6Ob {
+  /* 28.13deg = asin(sin(109.5deg/2)/sqrt(3)) */
+}
+.C2H6Ob .C:nth-of-type(1) {
+  transform: translateZ(-1em) rotate(-34.4deg) translate(3.325em) rotate(34.4deg);
+}
+.C2H6Ob .H:nth-of-type(3) {
+  transform: translateZ(-1em) rotate(-34.4deg) translate(3.325em) rotateX(210deg) rotateY(-28.13deg) translateZ(-2.35em) rotateY(28.13deg) rotateX(-210deg) rotate(34.4deg);
+}
+.C2H6Ob .H:nth-of-type(4) {
+  transform: translateZ(-1em) rotate(-34.4deg) translate(3.325em) rotateX(330deg) rotateY(-28.13deg) translateZ(-2.35em) rotateY(28.13deg) rotateX(-330deg) rotate(34.4deg);
+}
+.C2H6Ob .H:nth-of-type(5) {
+  transform: translateZ(-1em) rotate(-34.4deg) translate(3.325em) rotateX(450deg) rotateY(-28.13deg) translateZ(-2.35em) rotateY(28.13deg) rotateX(-450deg) rotate(34.4deg);
+}
+.C2H6Ob .C:nth-of-type(2) {
+  transform: translateZ(-1em) rotate(34.4deg) translate(-3.325em) rotate(-34.4deg);
+}
+.C2H6Ob .H:nth-of-type(6) {
+  transform: translateZ(-1em) rotate(34.4deg) translate(-3.325em) rotateX(210deg) rotateY(28.13deg) translateZ(-2.35em) rotateY(-28.13deg) rotateX(-210deg) rotate(-34.4deg);
+}
+.C2H6Ob .H:nth-of-type(7) {
+  transform: translateZ(-1em) rotate(34.4deg) translate(-3.325em) rotateX(330deg) rotateY(28.13deg) translateZ(-2.35em) rotateY(-28.13deg) rotateX(-330deg) rotate(-34.4deg);
+}
+.C2H6Ob .H:nth-of-type(8) {
+  transform: translateZ(-1em) rotate(34.4deg) translate(-3.325em) rotateX(450deg) rotateY(28.13deg) translateZ(-2.35em) rotateY(-28.13deg) rotateX(-450deg) rotate(-34.4deg);
+}
+.C2H6Ob .O {
+  transform: translateZ(-1em);
+}
+
+.C2H6O2 {
+  /* 28.13deg = asin(sin(109.5deg/2)/sqrt(3)) */
+}
+.C2H6O2 .C:nth-of-type(1) {
+  transform: translate(-1.55em);
+}
+.C2H6O2 .O:nth-of-type(9) {
+  transform: translate(-1.55em) rotate(-70deg) translate(-3.325em) rotate(70deg);
+}
+.C2H6O2 .H:nth-of-type(8) {
+  transform: translate(-1.55em) rotate(-70deg) translate(-3.325em) rotate(75deg) translate(-2.575em) rotate(-5deg);
+}
+.C2H6O2 .H:nth-of-type(3) {
+  transform: translate(-1.55em) rotateX(30deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-30deg);
+}
+.C2H6O2 .H:nth-of-type(4) {
+  transform: translate(-1.55em) rotateX(150deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-150deg);
+}
+.C2H6O2 .C:nth-of-type(2) {
+  transform: translate(1.55em);
+}
+.C2H6O2 .O:nth-of-type(10) {
+  transform: translate(1.55em) rotate(-70deg) translate(3.325em) rotate(70deg);
+}
+.C2H6O2 .H:nth-of-type(7) {
+  transform: translate(1.55em) rotate(-70deg) translate(3.325em) rotate(75deg) translate(2.575em) rotate(-5deg);
+}
+.C2H6O2 .H:nth-of-type(5) {
+  transform: translate(1.55em) rotateX(210deg) rotateY(28.13deg) translateZ(2.35em) rotateY(-28.13deg) rotateX(-210deg);
+}
+.C2H6O2 .H:nth-of-type(6) {
+  transform: translate(1.55em) rotateX(330deg) rotateY(28.13deg) translateZ(2.35em) rotateY(-28.13deg) rotateX(-330deg);
+}
+
+.C2H3NO {
+  /* 28.13deg = asin(sin(109.5deg/2)/sqrt(3)) */
+}
+.C2H3NO .C:nth-of-type(1) {
+  transform: translate(-1.55em);
+}
+.C2H3NO .H:nth-of-type(4) {
+  transform: translate(-1.55em) rotateY(-30deg) rotateX(28.13deg) translateZ(2.35em) rotateX(-28.13deg) rotateY(30deg);
+}
+.C2H3NO .C:nth-of-type(2) {
+  transform: translate(1.55em);
+}
+.C2H3NO .H:nth-of-type(5) {
+  transform: translate(-1.55em) rotateY(210deg) rotateX(28.13deg) translateZ(2.35em) rotateX(-28.13deg) rotateY(-210deg);
+}
+.C2H3NO .H:nth-of-type(3) {
+  transform: translate(-1.55em) rotate(110deg) translate(3.325em) rotate(-105deg) translate(-2.575em) rotate(-5deg);
+}
+.C2H3NO .O {
+  transform: translate(-1.55em) rotate(110deg) translate(3.325em) rotate(-110deg);
+}
+.C2H3NO .N {
+  transform: translate(4.675em);
+}
+
+.C2H3NOb {
+  /* 28.13deg = asin(sin(109.5deg/2)/sqrt(3)) */
+}
+.C2H3NOb .C:first-of-type {
+  transform: translate(1.5625em);
+}
+.C2H3NOb .C:nth-of-type(2) {
+  transform: translate(-1.5625em) rotate(-120deg) translate(3.125em) rotate(120deg);
+}
+.C2H3NOb .H:nth-of-type(3) {
+  transform: translate(-1.5625em) rotate(-120deg) translate(3.125em) rotateX(120deg) rotate(-28.13deg) translateY(2.35em) rotate(28.13deg) rotateX(-120deg) rotate(120deg);
+}
+.C2H3NOb .H:nth-of-type(4) {
+  transform: translate(-1.5625em) rotate(-120deg) translate(3.125em) rotateX(240deg) rotate(-28.13deg) translateY(2.35em) rotate(28.13deg) rotateX(-240deg) rotate(120deg);
+}
+.C2H3NOb .H:nth-of-type(5) {
+  transform: translate(-1.5625em) rotate(-120deg) translate(3.125em) rotateX(360deg) rotate(-28.13deg) translateY(2.35em) rotate(28.13deg) rotateX(-360deg) rotate(120deg);
+}
+.C2H3NOb .N {
+  transform: translate(-1.5625em);
+}
+.C2H3NOb .O {
+  transform: translate(4.9125em);
+}
+
+.C3H6 .C:nth-of-type(1) {
+  transform: rotate(120deg) translateX(1.78979em) rotate(-120deg);
+}
+.C3H6 .H:nth-of-type(4) {
+  transform: rotate(120deg) translate(1.78979em) rotateY(-57.5deg) translate(2.35em) rotateY(57.5deg) rotate(-120deg);
+}
+.C3H6 .H:nth-of-type(5) {
+  transform: rotate(120deg) translate(1.78979em) rotateY(57.5deg) translate(2.35em) rotateY(-57.5deg) rotate(-120deg);
+}
+.C3H6 .C:nth-of-type(2) {
+  transform: rotate(240deg) translateX(1.78979em) rotate(-240deg);
+}
+.C3H6 .H:nth-of-type(6) {
+  transform: rotate(240deg) translate(1.78979em) rotateY(-57.5deg) translate(2.35em) rotateY(57.5deg) rotate(-240deg);
+}
+.C3H6 .H:nth-of-type(7) {
+  transform: rotate(240deg) translate(1.78979em) rotateY(57.5deg) translate(2.35em) rotateY(-57.5deg) rotate(-240deg);
+}
+.C3H6 .C:nth-of-type(3) {
+  transform: rotate(360deg) translateX(1.78979em) rotate(-360deg);
+}
+.C3H6 .H:nth-of-type(8) {
+  transform: rotate(360deg) translate(1.78979em) rotateY(-57.5deg) translate(2.35em) rotateY(57.5deg) rotate(-360deg);
+}
+.C3H6 .H:nth-of-type(9) {
+  transform: rotate(360deg) translate(1.78979em) rotateY(57.5deg) translate(2.35em) rotateY(-57.5deg) rotate(-360deg);
+}
+
+.C3H6b {
+  /* 28.13deg = asin(sin(109.5deg/2)/sqrt(3)) */
+}
+.C3H6b .C:nth-of-type(1) {
+  transform: translate(-1.55em);
+}
+.C3H6b .H:nth-of-type(4) {
+  transform: translate(1.55em) rotate(-55.2deg) translate(3.1em) rotateX(30deg) rotateY(28.13deg) translateZ(2.35em) rotateY(-28.13deg) rotateX(-30deg) rotate(55.2deg);
+}
+.C3H6b .H:nth-of-type(5) {
+  transform: translate(-1.55em) rotate(120deg) translate(2.35em) rotate(-120deg);
+}
+.C3H6b .C:nth-of-type(2) {
+  transform: translate(1.55em);
+}
+.C3H6b .H:nth-of-type(6) {
+  transform: translate(1.55em) rotate(-55.2deg) translate(3.1em) rotateX(150deg) rotateY(28.13deg) translateZ(2.35em) rotateY(-28.13deg) rotateX(-150deg) rotate(55.2deg);
+}
+.C3H6b .H:nth-of-type(7) {
+  transform: translate(1.55em) rotate(60deg) translate(2.35em) rotate(-60deg);
+}
+.C3H6b .H:nth-of-type(8) {
+  transform: translate(1.55em) rotate(-55.2deg) translate(3.1em) rotateX(270deg) rotateY(28.13deg) translateZ(2.35em) rotateY(-28.13deg) rotateX(-270deg) rotate(55.2deg);
+}
+.C3H6b .H:nth-of-type(9) {
+  transform: translate(-1.55em) rotate(-120deg) translate(2.35em) rotate(120deg);
+}
+.C3H6b .C:nth-of-type(3) {
+  transform: translate(1.55em) rotate(-55.2deg) translate(3.1em) rotate(55.2deg);
+}
+
+.C4H8 {
+  /* 28.13deg = asin(sin(109.5deg/2)/sqrt(3)) */
+}
+.C4H8 .C:nth-of-type(1) {
+  transform: translate(-1.55em);
+}
+.C4H8 .C:nth-of-type(3) {
+  transform: translate(-1.55em) rotate(-125.4deg) translate(3.1em) rotate(125.4deg);
+}
+.C4H8 .H:nth-of-type(5) {
+  transform: translate(-1.55em) rotate(-125.4deg) translate(3.1em) rotate(-120deg) translate(-2.35em) rotate(120deg) rotate(125.4deg);
+}
+.C4H8 .H:nth-of-type(7) {
+  transform: translate(1.55em) rotate(33.95deg) rotateX(37.15deg) translateZ(2.35em) rotateX(-37.15deg) rotate(-33.95deg);
+}
+.C4H8 .C:nth-of-type(2) {
+  transform: translate(1.55em);
+}
+.C4H8 .C:nth-of-type(4) {
+  transform: translate(1.55em) rotate(-112.1deg) translate(-3.1em) rotate(112.1deg);
+}
+.C4H8 .H:nth-of-type(6) {
+  transform: translate(-1.55em) rotate(-125.4deg) translate(3.1em) rotate(120deg) translate(-2.35em) rotate(-120deg) rotate(125.4deg);
+}
+.C4H8 .H:nth-of-type(8) {
+  transform: translate(1.55em) rotate(33.95deg) rotateX(142.85deg) translateZ(2.35em) rotateX(-142.85deg) rotate(-33.95deg);
+}
+.C4H8 .H:nth-of-type(9) {
+  transform: translate(1.55em) rotate(-112.1deg) translate(-3.1em) rotateX(30deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-30deg) rotate(112.1deg);
+}
+.C4H8 .H:nth-of-type(10) {
+  transform: translate(1.55em) rotate(-112.1deg) translate(-3.1em) rotateX(150deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-150deg) rotate(112.1deg);
+}
+.C4H8 .H:nth-of-type(11) {
+  transform: translate(1.55em) rotate(-112.1deg) translate(-3.1em) rotateX(270deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-270deg) rotate(112.1deg);
+}
+.C4H8 .H:last-of-type {
+  transform: translate(-1.55em) rotate(117.1deg) translate(2.35em) rotate(-117.1deg);
+}
+
+.C4H8b {
+  /* 28.13deg = asin(sin(109.5deg/2)/sqrt(3)) */
+}
+.C4H8b .C:nth-child(1) {
+  transform: translate(-1.55em);
+}
+.C4H8b .C:nth-child(3) {
+  transform: translate(-1.55em) rotate(-125.4deg) translate(3.1em) rotate(125.4deg);
+}
+.C4H8b .H:nth-last-of-type(1) {
+  transform: translate(-1.55em) rotate(120deg) translate(2.35em) rotate(-120deg);
+}
+.C4H8b .H:nth-of-type(5) {
+  transform: translate(-1.55em) rotate(-125.4deg) translate(3.1em) rotateX(210deg) rotateY(28.13deg) translateZ(2.35em) rotateY(-28.13deg) rotateX(-210deg) rotate(125.4deg);
+}
+.C4H8b .H:nth-of-type(6) {
+  transform: translate(-1.55em) rotate(-125.4deg) translate(3.1em) rotateX(330deg) rotateY(28.13deg) translateZ(2.35em) rotateY(-28.13deg) rotateX(-330deg) rotate(125.4deg);
+}
+.C4H8b .H:nth-of-type(7) {
+  transform: translate(-1.55em) rotate(-125.4deg) translate(3.1em) rotateX(450deg) rotateY(28.13deg) translateZ(2.35em) rotateY(-28.13deg) rotateX(-450deg) rotate(125.4deg);
+}
+.C4H8b .C:nth-child(2) {
+  transform: translate(1.55em);
+}
+.C4H8b .C:nth-child(4) {
+  transform: translate(1.55em) rotate(125.4deg) translate(-3.1em) rotate(-125.4deg);
+}
+.C4H8b .H:nth-last-of-type(2) {
+  transform: translate(1.55em) rotate(-120deg) translate(-2.35em) rotate(120deg);
+}
+.C4H8b .H:nth-of-type(8) {
+  transform: translate(1.55em) rotate(125.4deg) translate(-3.1em) rotateX(210deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-210deg) rotate(-125.4deg);
+}
+.C4H8b .H:nth-of-type(9) {
+  transform: translate(1.55em) rotate(125.4deg) translate(-3.1em) rotateX(330deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-330deg) rotate(-125.4deg);
+}
+.C4H8b .H:nth-of-type(10) {
+  transform: translate(1.55em) rotate(125.4deg) translate(-3.1em) rotateX(450deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-450deg) rotate(-125.4deg);
+}
+
+.C4H8c {
+  /* 28.13deg = asin(sin(109.5deg/2)/sqrt(3)) */
+}
+.C4H8c .C:nth-child(1) {
+  transform: translate(-1.55em);
+}
+.C4H8c .C:nth-child(3) {
+  transform: translate(-1.55em) rotate(-123.8deg) translate(3.1em) rotate(123.8deg);
+}
+.C4H8c .H:nth-last-of-type(1) {
+  transform: translate(-1.55em) rotate(120deg) translate(2.35em) rotate(-120deg);
+}
+.C4H8c .H:nth-of-type(5) {
+  transform: translate(-1.55em) rotate(-123.8deg) translate(3.1em) rotateX(210deg) rotateY(28.13deg) translateZ(2.35em) rotateY(-28.13deg) rotateX(-210deg) rotate(123.8deg);
+}
+.C4H8c .H:nth-of-type(6) {
+  transform: translate(-1.55em) rotate(-123.8deg) translate(3.1em) rotateX(330deg) rotateY(28.13deg) translateZ(2.35em) rotateY(-28.13deg) rotateX(-330deg) rotate(123.8deg);
+}
+.C4H8c .H:nth-of-type(7) {
+  transform: translate(-1.55em) rotate(-123.8deg) translate(3.1em) rotateX(450deg) rotateY(28.13deg) translateZ(2.35em) rotateY(-28.13deg) rotateX(-450deg) rotate(123.8deg);
+}
+.C4H8c .C:nth-child(2) {
+  transform: translate(1.55em);
+}
+.C4H8c .C:nth-child(4) {
+  transform: translate(1.55em) rotate(-123.8deg) translate(-3.1em) rotate(123.8deg);
+}
+.C4H8c .H:nth-last-of-type(2) {
+  transform: translate(1.55em) rotate(120deg) translate(-2.35em) rotate(-120deg);
+}
+.C4H8c .H:nth-of-type(8) {
+  transform: translate(1.55em) rotate(-123.8deg) translate(-3.1em) rotateX(30deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-30deg) rotate(123.8deg);
+}
+.C4H8c .H:nth-of-type(9) {
+  transform: translate(1.55em) rotate(-123.8deg) translate(-3.1em) rotateX(150deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-150deg) rotate(123.8deg);
+}
+.C4H8c .H:nth-of-type(10) {
+  transform: translate(1.55em) rotate(-123.8deg) translate(-3.1em) rotateX(270deg) rotateY(-28.13deg) translateZ(2.35em) rotateY(28.13deg) rotateX(-270deg) rotate(123.8deg);
+}
+
+.C4H8d {
+  /* 28.13deg = asin(sin(109.5deg/2)/sqrt(3)) */
+}
+.C4H8d .C:nth-child(1) {
+  transform: translate(-1.55em);
+}
+.C4H8d .C:nth-child(3) {
+  transform: translate(1.55em) rotate(37.5deg) translateY(-3.1em) rotate(-37.5deg);
+}
+.C4H8d .H:nth-last-of-type(1) {
+  transform: translate(-1.55em) rotate(30.75deg) translateY(2.35em) rotate(-30.75deg);
+}
+.C4H8d .H:nth-of-type(5) {
+  transform: translate(1.55em) rotate(37.5deg) translateY(-3.1em) rotateY(210deg) rotateX(28.13deg) translateZ(2.35em) rotateX(-28.13deg) rotateY(-210deg) rotate(-37.5deg);
+}
+.C4H8d .H:nth-of-type(6) {
+  transform: translate(1.55em) rotate(37.5deg) translateY(-3.1em) rotateY(330deg) rotateX(28.13deg) translateZ(2.35em) rotateX(-28.13deg) rotateY(-330deg) rotate(-37.5deg);
+}
+.C4H8d .H:nth-of-type(7) {
+  transform: translate(1.55em) rotate(37.5deg) translateY(-3.1em) rotateY(450deg) rotateX(28.13deg) translateZ(2.35em) rotateX(-28.13deg) rotateY(-450deg) rotate(-37.5deg);
+}
+.C4H8d .C:nth-child(2) {
+  transform: translate(1.55em);
+}
+.C4H8d .C:nth-child(4) {
+  transform: translate(1.55em) rotate(-37.5deg) translateY(3.1em) rotate(37.5deg);
+}
+.C4H8d .H:nth-last-of-type(2) {
+  transform: translate(-1.55em) rotate(-30.75deg) translateY(-2.35em) rotate(30.75deg);
+}
+.C4H8d .H:nth-of-type(8) {
+  transform: translate(1.55em) rotate(-37.5deg) translateY(3.1em) rotateY(210deg) rotateX(-28.13deg) translateZ(2.35em) rotateX(28.13deg) rotateY(-210deg) rotate(37.5deg);
+}
+.C4H8d .H:nth-of-type(9) {
+  transform: translate(1.55em) rotate(-37.5deg) translateY(3.1em) rotateY(330deg) rotateX(-28.13deg) translateZ(2.35em) rotateX(28.13deg) rotateY(-330deg) rotate(37.5deg);
+}
+.C4H8d .H:nth-of-type(10) {
+  transform: translate(1.55em) rotate(-37.5deg) translateY(3.1em) rotateY(450deg) rotateX(-28.13deg) translateZ(2.35em) rotateX(28.13deg) rotateY(-450deg) rotate(37.5deg);
+}
+
+.C6H6 .C:nth-of-type(1) {
+  transform: rotate(60deg) translateX(3.1em) rotate(-60deg);
+}
+.C6H6 .H:nth-of-type(7) {
+  transform: rotate(60deg) translateX(5.45em) rotate(-60deg);
+}
+.C6H6 .C:nth-of-type(2) {
+  transform: rotate(120deg) translateX(3.1em) rotate(-120deg);
+}
+.C6H6 .H:nth-of-type(8) {
+  transform: rotate(120deg) translateX(5.45em) rotate(-120deg);
+}
+.C6H6 .C:nth-of-type(3) {
+  transform: rotate(180deg) translateX(3.1em) rotate(-180deg);
+}
+.C6H6 .H:nth-of-type(9) {
+  transform: rotate(180deg) translateX(5.45em) rotate(-180deg);
+}
+.C6H6 .C:nth-of-type(4) {
+  transform: rotate(240deg) translateX(3.1em) rotate(-240deg);
+}
+.C6H6 .H:nth-of-type(10) {
+  transform: rotate(240deg) translateX(5.45em) rotate(-240deg);
+}
+.C6H6 .C:nth-of-type(5) {
+  transform: rotate(300deg) translateX(3.1em) rotate(-300deg);
+}
+.C6H6 .H:nth-of-type(11) {
+  transform: rotate(300deg) translateX(5.45em) rotate(-300deg);
+}
+.C6H6 .C:nth-of-type(6) {
+  transform: rotate(360deg) translateX(3.1em) rotate(-360deg);
+}
+.C6H6 .H:nth-of-type(12) {
+  transform: rotate(360deg) translateX(5.45em) rotate(-360deg);
+}
+
+.C6H12 .C:nth-of-type(1) {
+  transform: rotate(60deg) translate(3.1em) rotate(-60deg);
+}
+.C6H12 .H:nth-of-type(7) {
+  transform: rotate(60deg) translate(3.1em) rotateY(30deg) translateZ(2.35em) rotateY(-30deg) rotate(-60deg);
+}
+.C6H12 .H:nth-of-type(8) {
+  transform: rotate(60deg) translate(3.1em) rotateY(150deg) translateZ(2.35em) rotateY(-150deg) rotate(-60deg);
+}
+.C6H12 .C:nth-of-type(2) {
+  transform: rotate(120deg) translate(3.1em) rotate(-120deg);
+}
+.C6H12 .H:nth-of-type(9) {
+  transform: rotate(120deg) translate(3.1em) rotateY(30deg) translateZ(2.35em) rotateY(-30deg) rotate(-120deg);
+}
+.C6H12 .H:nth-of-type(10) {
+  transform: rotate(120deg) translate(3.1em) rotateY(150deg) translateZ(2.35em) rotateY(-150deg) rotate(-120deg);
+}
+.C6H12 .C:nth-of-type(3) {
+  transform: rotate(180deg) translate(3.1em) rotate(-180deg);
+}
+.C6H12 .H:nth-of-type(11) {
+  transform: rotate(180deg) translate(3.1em) rotateY(30deg) translateZ(2.35em) rotateY(-30deg) rotate(-180deg);
+}
+.C6H12 .H:nth-of-type(12) {
+  transform: rotate(180deg) translate(3.1em) rotateY(150deg) translateZ(2.35em) rotateY(-150deg) rotate(-180deg);
+}
+.C6H12 .C:nth-of-type(4) {
+  transform: rotate(240deg) translate(3.1em) rotate(-240deg);
+}
+.C6H12 .H:nth-of-type(13) {
+  transform: rotate(240deg) translate(3.1em) rotateY(30deg) translateZ(2.35em) rotateY(-30deg) rotate(-240deg);
+}
+.C6H12 .H:nth-of-type(14) {
+  transform: rotate(240deg) translate(3.1em) rotateY(150deg) translateZ(2.35em) rotateY(-150deg) rotate(-240deg);
+}
+.C6H12 .C:nth-of-type(5) {
+  transform: rotate(300deg) translate(3.1em) rotate(-300deg);
+}
+.C6H12 .H:nth-of-type(15) {
+  transform: rotate(300deg) translate(3.1em) rotateY(30deg) translateZ(2.35em) rotateY(-30deg) rotate(-300deg);
+}
+.C6H12 .H:nth-of-type(16) {
+  transform: rotate(300deg) translate(3.1em) rotateY(150deg) translateZ(2.35em) rotateY(-150deg) rotate(-300deg);
+}
+.C6H12 .C:nth-of-type(6) {
+  transform: rotate(360deg) translate(3.1em) rotate(-360deg);
+}
+.C6H12 .H:nth-of-type(17) {
+  transform: rotate(360deg) translate(3.1em) rotateY(30deg) translateZ(2.35em) rotateY(-30deg) rotate(-360deg);
+}
+.C6H12 .H:nth-of-type(18) {
+  transform: rotate(360deg) translate(3.1em) rotateY(150deg) translateZ(2.35em) rotateY(-150deg) rotate(-360deg);
+}
+
+.C6H12b {
+  /* 28.13deg = asin(sin(109.5deg/2)/sqrt(3)) */
+}
+.C6H12b .C:nth-of-type(1) {
+  transform: rotate(72deg) translate(2.63702em) rotate(-72deg);
+}
+.C6H12b .H:nth-of-type(7) {
+  transform: rotate(72deg) translate(2.63702em) rotateY(-120deg) translate(-2.35em) rotateY(120deg) rotate(-72deg);
+}
+.C6H12b .H:nth-of-type(8) {
+  transform: rotate(72deg) translate(2.63702em) rotateY(120deg) translate(-2.35em) rotateY(-120deg) rotate(-72deg);
+}
+.C6H12b .C:nth-of-type(2) {
+  transform: rotate(144deg) translate(2.63702em) rotate(-144deg);
+}
+.C6H12b .H:nth-of-type(9) {
+  transform: rotate(144deg) translate(2.63702em) rotateY(-120deg) translate(-2.35em) rotateY(120deg) rotate(-144deg);
+}
+.C6H12b .H:nth-of-type(10) {
+  transform: rotate(144deg) translate(2.63702em) rotateY(120deg) translate(-2.35em) rotateY(-120deg) rotate(-144deg);
+}
+.C6H12b .C:nth-of-type(3) {
+  transform: rotate(216deg) translate(2.63702em) rotate(-216deg);
+}
+.C6H12b .H:nth-of-type(11) {
+  transform: rotate(216deg) translate(2.63702em) rotateY(-120deg) translate(-2.35em) rotateY(120deg) rotate(-216deg);
+}
+.C6H12b .H:nth-of-type(12) {
+  transform: rotate(216deg) translate(2.63702em) rotateY(120deg) translate(-2.35em) rotateY(-120deg) rotate(-216deg);
+}
+.C6H12b .C:nth-of-type(4) {
+  transform: rotate(288deg) translate(2.63702em) rotate(-288deg);
+}
+.C6H12b .H:nth-of-type(13) {
+  transform: rotate(288deg) translate(2.63702em) rotateY(-120deg) translate(-2.35em) rotateY(120deg) rotate(-288deg);
+}
+.C6H12b .H:nth-of-type(14) {
+  transform: rotate(288deg) translate(2.63702em) rotateY(120deg) translate(-2.35em) rotateY(-120deg) rotate(-288deg);
+}
+.C6H12b .C:nth-of-type(5) {
+  transform: rotate(360deg) translate(2.63702em) rotate(-360deg);
+}
+.C6H12b .H:nth-of-type(15) {
+  transform: rotate(360deg) translate(2.63702em) rotateY(-120deg) translate(-2.35em) rotateY(120deg) rotate(-360deg);
+}
+.C6H12b .H:nth-of-type(16) {
+  transform: rotate(360deg) translate(2.63702em) rotateY(120deg) translate(-2.35em) rotateY(-120deg) rotate(-360deg);
+}
+.C6H12b .C:nth-of-type(6) {
+  transform: rotate(432deg) translate(2.63702em) rotate(-432deg);
+}
+.C6H12b .H:nth-of-type(17) {
+  transform: rotate(432deg) translate(2.63702em) rotateY(-120deg) translate(-2.35em) rotateY(120deg) rotate(-432deg);
+}
+.C6H12b .H:nth-of-type(18) {
+  transform: rotate(432deg) translate(2.63702em) rotateY(120deg) translate(-2.35em) rotateY(-120deg) rotate(-432deg);
+}
+.C6H12b .C:nth-of-type(6) {
+  transform: translate(2.63702em) rotateY(120deg) translate(-3.1em) rotateY(-120deg);
+}
+.C6H12b .H:nth-last-of-type(1) {
+  transform: translate(2.63702em) rotateY(120deg) translate(-3.1em) rotateX(120deg) rotateY(28.13deg) translateZ(-2.35em) rotateY(-28.13deg) rotateX(-120deg) rotateY(-120deg);
+}
+.C6H12b .H:nth-last-of-type(2) {
+  transform: translate(2.63702em) rotateY(120deg) translate(-3.1em) rotateX(240deg) rotateY(28.13deg) translateZ(-2.35em) rotateY(-28.13deg) rotateX(-240deg) rotateY(-120deg);
+}
+.C6H12b .H:nth-last-of-type(3) {
+  transform: translate(2.63702em) rotateY(120deg) translate(-3.1em) rotateX(360deg) rotateY(28.13deg) translateZ(-2.35em) rotateY(-28.13deg) rotateX(-360deg) rotateY(-120deg);
+}

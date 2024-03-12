@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Éditeur HTML</title>
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #2b2b2b; /* Fond sombre */
+            color: #fff; /* Texte clair */
+        }
+
+        #editor-container, #preview-container {
+            flex: 1;
+            height: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        #editor, #preview {
+            width: 100%;
+            height: calc(100% - 32px); /* Hauteur - espace pour le bouton */
+            border: 1px solid #555; /* Bordure sombre */
+            box-sizing: border-box;
+            padding: 10px;
+            background-color: #333; /* Fond du code sombre */
+            color: #fff; /* Texte du code clair */
+            resize: none;
+        }
+
+        #editor-container {
+            background-color: #1e1e1e; /* Fond sombre */
+            position: relative;
+        }
+
+        #preview-container {
+            background-color: #1e1e1e; /* Fond sombre */
+            position: relative;
+        }
+
+        #run-button {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50; /* Vert */
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="editor-container">
+        <textarea id="editor" placeholder="Entrez votre code HTML ici..."></textarea>
+    </div>
+    <div id="preview-container">
+        <iframe id="preview" frameborder="0"></iframe>
+    </div>
+    <button id="run-button" onclick="runCode()">Run</button>
+
+    <script>
+        // Fonction pour mettre à jour l'aperçu
+        function updatePreview() {
+            var previewFrame = document.getElementById('preview');
+            var preview =  previewFrame.contentDocument ||  previewFrame.contentWindow.document;
+            preview.open();
+            preview.write(document.getElementById('editor').value);
+            preview.close();
+        }
+
+        // Fonction pour exécuter le code lors du clic sur le bouton "Run"
+        function runCode() {
+            updatePreview();
+        }
+
+        // Ajouter un écouteur d'événements pour mettre à jour l'aperçu lors de la modification du code
+        document.getElementById('editor').addEventListener('input', function() {
+            // Réinitialiser le contenu de l'aperçu lorsque l'utilisateur modifie le code
+            var previewFrame = document.getElementById('preview');
+            var preview =  previewFrame.contentDocument ||  previewFrame.contentWindow.document;
+            preview.open();
+            preview.close();
+        });
+    </script>
+</body>
+</html>

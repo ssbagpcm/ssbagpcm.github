@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acides Aminés</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+  
+        body {
+            background: linear-gradient(to bottom right, #4CAF50, #3498db);
+            color: #ffffff;
+            font-family: 'Titillium Web', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header, footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        section {
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            animation: fadeIn 1s ease-in-out;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        section:hover {
+            transform: rotate(3deg);
+        }
+
+        h1, h2 {
+            color: #ffffff;
+            text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.8);
+            animation: shine 5s ease-in-out infinite;
+        }
+
+        p, select {
+            font-size: 16px;
+            color: #ffffff;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        select {
+            padding: 5px;
+            margin-bottom: 20px;
+        }
+
+        .cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .cursor div {
+            position: absolute;
+            display: grid;
+            place-items: center;
+            div {
+                border: 1px solid #fff;
+                border-radius: 50%;
+                animation: pulse 2.5s linear infinite;
+                box-shadow: 0 0 50px 5px #d7abff6e;
+            }
+        }
+
+        .cursor div:nth-child(1),
+        .cursor div:nth-child(2) {
+            width: 100%;
+            height: 100%;
+        }
+
+        .cursor div:nth-child(1) {
+            transition: transform 0.2s ease-out;
+        }
+
+        .cursor div:nth-child(2) {
+            div {
+                background: #fff;
+                border-radius: 50%;
+                width: 4px;
+                height: 4px;
+            }
+            transition: transform 0.1s ease-out;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.8);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(0.8);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes shine {
+            0% {
+                text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.8);
+            }
+            50% {
+                text-shadow: 8px 8px 8px rgba(255, 255, 255, 0.8);
+            }
+            100% {
+                text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Acides Aminés</h1>
+    </header>
+
+    <main>
+        <section id="alanine">
+            <h2>Alanine</h2>
+            <p>L'alanine est un acide aminé non essentiel. Elle joue un rôle important dans le métabolisme énergétique.</p>
+        </section>
+
+        <section id="arginine">
+            <h2>Arginine</h2>
+            <p>L'arginine est un acide aminé semi-essentiel, important pour la production d'oxyde nitrique et la santé cardiovasculaire.</p>
+        </section>
+
+        <section id="asparagine">
+            <h2>Asparagine</h2>
+            <p>L'asparagine est un acide aminé non essentiel, participant à la synthèse des protéines et au métabolisme de l'azote.</p>
+        </section>
+
+        <section id="aspartic-acid">
+            <h2>Acide aspartique</h2>
+            <p>L'acide aspartique est un acide aminé non essentiel, jouant un rôle dans la régulation du système nerveux et le métabolisme énergétique.</p>
+        </section>
+
+        <section id="cysteine">
+            <h2>Cystéine</h2>
+            <p>La cystéine est un acide aminé semi-essentiel, participant à la formation des protéines et à la synthèse du glutathion.</p>
+        </section>
+
+        <section id="glutamine">
+            <h2>Glutamine</h2>
+            <p>La glutamine est un acide aminé non essentiel, important pour le métabolisme cellulaire et la santé intestinale.</p>
+        </section>
+
+        <section id="glycine">
+            <h2>Glycine</h2>
+            <p>La glycine est un acide aminé non essentiel, constituant des protéines, des acides nucléiques et d'autres molécules biologiques.</p>
+        </section>
+
+        <section id="histidine">
+            <h2>Histidine</h2>
+            <p>L'histidine est un acide aminé essentiel, participant à la synthèse des protéines et servant de précurseur pour plusieurs molécules biologiquement actives.</p>
+        </section>
+
+        <section id="isoleucine">
+            <h2>Isoleucine</h2>
+            <p>L'isoleucine est un acide aminé essentiel, participant à la formation des protéines et à la régulation de l'énergie.</p>
+        </section>
+
+        <section id="leucine">
+            <h2>Leucine</h2>
+            <p>La leucine est un acide aminé essentiel, crucial pour la synthèse des protéines musculaires et la régulation de la croissance cellulaire.</p>
+        </section>
+
+        <section id="lysine">
+            <h2>Lysine</h2>
+            <p>La lysine est un acide aminé essentiel, nécessaire à la croissance et au maintien des tissus.</p>
+        </section>
+
+        <section id="methionine">
+            <h2>Méthionine</h2>
+            <p>La méthionine est un acide aminé essentiel, important pour la synthèse des protéines, la formation de nouvelles cellules, et la détoxification du foie.</p>
+        </section>
+
+        <section id="phenylalanine">
+            <h2>Phénylalanine</h2>
+            <p>La phénylalanine est un acide aminé essentiel, précurseur de la tyrosine, participant à la production de neurotransmetteurs.</p>
+        </section>
+
+        <section id="proline">
+            <h2>Proline</h2>
+            <p>La proline est un acide aminé non essentiel, important pour la structure des protéines et la cicatrisation des plaies.</p>
+        </section>
+
+        <section id="serine">
+            <h2>Sérine</h2>
+            <p>La sérine est un acide aminé non essentiel, jouant un rôle crucial dans la biosynthèse des protéines et des acides gras.</p>
+        </section>
+
+        <section id="threonine">
+            <h2>Thréonine</h2>
+            <p>La thréonine est un acide aminé essentiel, nécessaire à la croissance des tissus et à la régulation des protéines corporelles.</p>
+        </section>
+
+        <section id="tryptophane">
+            <h2>Tryptophane</h2>
+            <p>Le tryptophane est un acide aminé essentiel, précurseur de la sérotonine, régulant l'humeur, le sommeil et le bien-être émotionnel.</p>
+        </section>
+
+        <section id="tyrosine">
+            <h2>Tyrosine</h2>
+            <p>La tyrosine est un acide aminé non essentiel, précurseur de la dopamine et de la noradrénaline, jouant un rôle dans la régulation de l'humeur et du stress.</p>
+        </section>
+
+        <section id="valine">
+            <h2>Valine</h2>
+            <p>La valine est un acide aminé essentiel, jouant un rôle clé dans la croissance musculaire et la régulation de l'équilibre azoté.</p>
+        </section>
+    </main>
+
+    <div class="cursor">
+        <div class="ring">
+            <div></div>
+        </div>
+        <div class="ring">
+            <div></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('mousemove', function (e) {
+            document.querySelector('.cursor div:nth-child(1)').style.transform =
+                `translateX(calc(${e.clientX}px - 1.25rem)) translateY(calc(${e.clientY}px - 1.25rem))`;
+        });
+    </script>
+</body>
+</html>

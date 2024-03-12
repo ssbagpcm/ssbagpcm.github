@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#⨜.৻.Ι.Ξ.Π.৻.Ξ.⨜ extractor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+            margin: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .article {
+            border: 1px solid #555;
+            padding: 10px;
+            background-color: #444;
+            margin-top: 20px;
+            color: #fff;
+        }
+
+        input, select, button {
+            margin-bottom: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        input, select {
+            width: 200px;
+        }
+
+        button.delete-button {
+            background-color: #ff00007a;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>#⨜.৻.Ι.Ξ.Π.৻.Ξ.⨜</h1>
+
+    <label for="keywords">Enter Keywords:</label>
+    <input type="text" id="keywords" placeholder="Enter keywords..." value="Sciences, biology, astronomy, physics, geology, plant">
+    <label for="language">Select Language:</label>
+    <select id="language">
+        <option value="en">English</option>
+        <option value="fr">French</option>
+    </select>
+    <button onclick="searchKeywords()">Search</button>
+    <button onclick="deleteResults()" class="delete-button">Delete Results</button>
+    <button onclick="downloadResults()">Download</button>
+
+    <div id="article" class="article"></div>
+
+    <script>
+        window.onload = function () {
+            searchKeywords();
+        };
+
+        function searchKeywords() {
+            var keywordsInput = document.getElementById('keywords').value;
+            var keywordsArray = keywordsInput.split(',');
+
+            var language = document.getElementById('language').value;
+
+            // Perform search for each keyword
+            for (var i = 0; i < keywordsArray.length; i++) {
+                var keyword = keywordsArray[i].trim();
+
+                if (keyword !== '') {
+                    var searchUrl = `https://${language}.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=${keyword}&callback=displaySearchResults`;
+                    var script = document.createElement('script');
+                    script.src = searchUrl;
+                    document.body.appendChild(script);
+
+                    // Add a class to distinguish results from different keywords
+                    document.getElementById('article').classList.add('search-results');
+                }
+            }
+        }
+
+        function displaySearchResults(data) {
+            var searchResults = data.query.search;
+
+            if (searchResults.length > 0) {
+                var firstResult = searchResults[0];
+                var pageTitle = firstResult.title;
+
+                extractArticle(pageTitle);
+            } else {
+                document.getElementById('article').innerHTML += `<p>No results found for this keyword.</p>`;
+            }
+        }
+
+        function extractArticle(title) {
+            var language = document.getElementById('language').value;
+            var url = `https://${language}.wikipedia.org/w/api.php?action=query&format=json&prop=extracts|pageimages&exintro=true&titles=${title}&pithumbsize=300&callback=displayArticle`;
+
+            var script = document.createElement('script');
+            script.src = url;
+            document.body.appendChild(script);
+        }
+
+        function displayArticle(data) {
+            var articleDiv = document.getElementById('article');
+
+            var pages = data.query.pages;
+            for (var key in pages) {
+                var page = pages[key];
+                var title = page.title;
+                var extract = page.extract;
+                var imageUrl = page.thumbnail ? page.thumbnail.source : '';
+
+                articleDiv.innerHTML += `<h2>${title}</h2>`;
+                if (imageUrl) {
+                    articleDiv.innerHTML += `<img src="${imageUrl}" alt="${title}">`;
+                }
+                articleDiv.innerHTML += `<p>${extract}</p>`;
+            }
+        }
+
+        function deleteResults() {
+            document.getElementById('article').innerHTML = '';
+        }
+
+        function downloadResults() {
+            var articleContent = document.getElementById('article').innerHTML;
+            var blob = new Blob([articleContent], { type: 'text/html' });
+            var url = window.URL.createObjectURL(blob);
+            
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'search_results.html';
+            
+            document.body.appendChild(a);
+            a.click();
+            
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+
+</body>
+
+</html>

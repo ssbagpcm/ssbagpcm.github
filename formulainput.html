@@ -1,0 +1,21 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Formula input</title>
+        <script>
+            function display() {
+           	    i = document.getElementById("formula");
+				z = document.getElementById("fzoom");
+                localStorage.setItem("formula", i.value);
+				localStorage.setItem("fzoom", z.value);
+                window.location.href = "formuladisplay.html";
+            }
+        </script>
+    </head>
+    <body>
+        <textarea id="formula" style="width:100%;height:1000px;"></textarea><br>
+		<p>zoom : <textarea id="fzoom" style="width:50%;height:100px;"></textarea></p><br>
+        <button onclick="display();" style="width:100%;">Afficher la formule</button>
+    </body>
+</html>

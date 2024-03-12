@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visual Memory Game</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <style>
+      * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+body {
+    background-color: #2b87d1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+body.win {
+    -webkit-animation: winShineAni 0.9s;
+}
+body.lose {
+    -webkit-animation: loseShineAni 0.7s;
+}
+@keyframes loseShineAni {
+    50% {
+        background: #fcadb8;
+    }
+    100% {
+        background: #2b87d1;
+    }
+}
+@keyframes winShineAni {
+    50% {
+        background: #47a6f5;
+    }
+    100% {
+        background: #2b87d1;
+    }
+}
+/******************************start menu************************************/
+.start-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+.logo {
+    width: 100px;
+    height: 100px;
+    gap: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 11px;
+    -webkit-animation: logoAni 2.3s infinite;
+}
+@keyframes logoAni {
+    45% {
+        opacity: 0.6;
+    }
+    47% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.lsqr,
+.sqr-with-hole {
+    height: 45.31px;
+    width: 45.31px;
+    background: #fff;
+    border-radius: 8px;
+    display: block;
+}
+.sqr-with-hole {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sqr-with-hole div {
+    height: 30.51px;
+    width: 30.51px;
+    background: #2b87d1;
+    border-radius: 1.5px;
+}
+.texts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    flex-wrap: wrap;
+    text-align: center;
+}
+.texts h1 {
+    font-size: 80px;
+}
+.description {
+    font-size: 24px;
+    margin-top: 6px;
+}
+.Start-Btn,
+.save-score {
+    background: #ffd154;
+    border: none;
+    padding: 12px 30px;
+    cursor: pointer;
+    color: #333333;
+    transition: background 0.1s linear 0s;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 3px;
+    margin-top: 30px;
+}
+.Start-Btn:hover,
+.save-score:hover,
+.try-again:hover {
+    background: #fff2ce;
+}
+/******************************end menu************************************/
+.end-menu {
+    display: flex;
+
+    flex-direction: column;
+    cursor: pointer;
+    text-align: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+}
+.end-logo {
+    width: 80px;
+    height: 80px;
+    gap: 7px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+}
+.esqr,
+.esqr-with-hole {
+    height: 36.25px;
+    width: 36.25px;
+    background: #fff;
+    border-radius: 6px;
+    display: block;
+}
+.esqr-with-hole {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.esqr-with-hole div {
+    height: 24.4px;
+    width: 24.4px;
+    background: #2b87d1;
+    border-radius: 1.5px;
+}
+.end-menu h6 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 500;
+}
+.end-menu h1 {
+    font-size: 80px;
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 40px;
+    margin-top: 8.5px;
+}
+.disc {
+    color: #fff;
+    font-size: 18px;
+}
+.try-again {
+    background: #95c3e8;
+    border: none;
+    padding: 12px 30px;
+    cursor: pointer;
+    color: #333333;
+    transition: background 0.1s linear 0s;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 3px;
+    margin-top: 30px;
+    margin-left: 5px;
+}
+/******************************game page************************************/
+.game {
+    cursor: pointer;
+}
+.upbar {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-left: 30px;
+    margin-bottom: 36px;
+}
+.upbar h3 {
+    display: flex;
+    color: #aacfed;
+    font-size: 28px;
+    font-weight: 500;
+    margin-right: 35px;
+}
+.upbar h3 div {
+    color: #fff;
+    margin-left: 10px;
+}
+.hearts i {
+    color: #fff;
+    font-size: 32px;
+    margin: -2px -3.5px;
+}
+.section {
+    display: flex;
+    width: 100%;
+
+    height: 132px;
+    align-items: center;
+    justify-content: center;
+}
+.sqr {
+    background: #2573c1;
+    cursor: pointer;
+    border: solid transparent;
+}
+.sqr.win1 {
+    -webkit-animation: winShineAni1 0.9s;
+}
+.sqr.right.win1 {
+    -webkit-animation: winShineAni1 0.9s;
+}
+.sqr.miss.win1 {
+    -webkit-animation: winShineAni1 0.9s;
+}
+.sqr.lose1 {
+    -webkit-animation: loseShineAni1 0.7s;
+}
+.sqr.right.lose1 {
+    -webkit-animation: loseShineAni1 0.7s;
+}
+.sqr.miss.lose1 {
+    -webkit-animation: loseShineAni1 0.7s;
+}
+@keyframes loseShineAni1 {
+    50% {
+        border-color: #fcadb8;
+    }
+    100% {
+        border-color: #2b87d1;
+    }
+}
+@keyframes winShineAni1 {
+    50% {
+        border-color: #47a6f5;
+    }
+    100% {
+        border-color: #2b87d1;
+    }
+}
+
+.sqr.show {
+    background: #fff;
+    -webkit-animation: showani 0.38s;
+}
+@keyframes showani {
+    100% {
+        transform: rotateX(180deg);
+    }
+}
+.sqr.hide {
+    background: #2573c1;
+    -webkit-animation: hideani 0.38s;
+}
+.sqr.win1.hide {
+    background: #2573c1;
+    -webkit-animation: hideani 0.38s;
+}
+.sqr.lose1.hide {
+    background: #2573c1;
+    -webkit-animation: hideani 0.38s;
+}
+@keyframes hideani {
+    100% {
+        transform: rotateX(-180deg);
+    }
+}
+
+.sqr.right {
+    background: #fff;
+    -webkit-animation: hideani 0.38s;
+}
+@keyframes rightani {
+    100% {
+        transform: rotateX(180deg);
+    }
+}
+.sqr.miss {
+    background: #154368;
+    -webkit-animation: missani 0.32s;
+}
+@keyframes missani {
+    20% {
+        transform: translateX(-2.3px);
+    }
+    40% {
+        transform: translateX(2.3px);
+    }
+    60% {
+        transform: translateX(-2.3px);
+    }
+    80% {
+        transform: translateX(2.3px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+/******************************hide************************************/
+.start-menu.hide {
+    display: none;
+    pointer-events: none;
+}
+.end-menu.hide {
+    display: none;
+    pointer-events: none;
+}
+.game.hide {
+    display: none;
+    pointer-events: none;
+}
+
+    </style>
+  </head>
+  <body>
+    <div class="start-menu" id="startMenu">
+      <div class="logo">
+        <span class="lsqr"></span>
+        <span class="lsqr"></span>
+        <span class="lsqr"></span>
+        <span class="sqr-with-hole"><div></div></span>
+      </div>
+      <div class="texts">
+        <h1>Visual Memory Test</h1>
+        <div class="description">Memorize the squares.</div>
+      </div>
+      <div class="btn">
+        <button class="Start-Btn">Start</button>
+      </div>
+    </div>
+    <div class="game hide" id="gameMenu">
+      <div class="upbar">
+        <h3>
+          Level
+          <div>1</div>
+        </h3>
+        <h3 class="lives">
+          Lives
+          <div class="hearts">
+            <i class="material-icons" class="heart">favorite</i>
+            <i class="material-icons" class="heart">favorite</i>
+            <i class="material-icons" class="heart">favorite</i>
+          </div>
+        </h3>
+      </div>
+    </div>
+    <div class="end-menu hide" id="endMenu">
+      <div class="end-logo">
+        <span class="esqr"></span>
+        <span class="esqr"></span>
+        <span class="esqr"></span>
+        <span class="esqr-with-hole"><div></div></span>
+      </div>
+      <h6>Visual Memory</h6>
+      <h1>Level <span id="endLevelresult">1</span></h1>
+      <div class="disc">Save your score to see how you compare.</div>
+      <div class="buts">
+        <button class="save-score">Save score</button>
+        <button class="try-again" id="tryAgainBtn">Try again</button>
+      </div>
+    </div>
+    <script>
+
+    const content = document.querySelector(".game"),
+    level = document.querySelector(".upbar h3 div"),
+    hearts = document.querySelectorAll(".hearts i");
+const section = [],
+    sqr = [];
+let xbyx = 3,
+    sqram = 3,
+    countsqram = 0,
+    tryes = 3,
+    mainLives = 3;
+
+function create() {
+    let i = 0;
+    for (let j = 0; j < xbyx; j++) {
+        section[j] = document.createElement("div");
+        section[j].classList.add("section");
+
+        section[j].style.height = 396 / xbyx + "px";
+        content.appendChild(section[j]);
+    }
+    for (let j = 0; j < xbyx * xbyx; j++) {
+        sqr[j] = document.createElement("div");
+        sqr[j].classList.add("sqr");
+        sqr[j].style.height = Math.floor(396 / xbyx) + "px";
+        sqr[j].style.width = Math.floor(396 / xbyx) + "px";
+        sqr[j].style.border = "solid ";
+        sqr[j].style.borderColor = "#2b87d1";
+        sqr[j].style.pointerEvents = "all";
+
+        sqr[j].dataset.value = "0";
+        // sqr[j].classList.add("showhide");
+        sqr[j].style.borderWidth = Math.floor(24.75 / xbyx) + "px";
+        sqr[j].style.borderRadius = Math.floor(49.5 / xbyx) + "px";
+
+        section[i].appendChild(sqr[j]);
+        if ((j + 1) % xbyx == 0) {
+            i++;
+        }
+    }
+}
+
+function clear() {
+    for (let i = 0; i < xbyx - 1; i++) {
+        content.removeChild(section[i]);
+    }
+}
+function setWhiteSqrs() {
+    level.innerHTML = sqram - 2;
+
+    for (let i = 0; i < xbyx * xbyx; i++) {
+        sqr[i].dataset.value = "0";
+        sqr[i].classList.remove("win1");
+        sqr[i].classList.remove("hide");
+        sqr[i].classList.remove("miss");
+        sqr[i].classList.remove("lose1");
+        sqr[i].style.pointerEvents = "all";
+    }
+    for (let i = 0; i < sqram; i++) {
+        let randomnum = Math.floor(Math.random() * (xbyx * xbyx));
+        while (1 > 0) {
+            randomnum = Math.floor(Math.random() * (xbyx * xbyx));
+            if (sqr[randomnum].dataset.value == 0) {
+                break;
+            }
+        }
+        sqr[randomnum].dataset.value = "1";
+    }
+}
+
+function showWhiteSqrs() {
+    for (let i = 0; i < xbyx * xbyx; i++) {
+        sqr[i].style.pointerEvents = "none"; //
+        if (sqr[i].dataset.value == 1) {
+            sqr[i].classList.add("show");
+            setTimeout(() => {
+                sqr[i].classList.remove("show");
+                sqr[i].classList.add("hide");
+            }, 1300);
+            setTimeout(() => {
+                sqr[i].classList.remove("hide");
+            }, 1480);
+        }
+        setTimeout(() => {
+            sqr[i].style.pointerEvents = "all";
+        }, 1500);
+    }
+}
+function winAndAdd() {
+    countsqram = 0;
+    tryes = 3;
+    sqram++;
+
+    setWhiteSqrs();
+    showWhiteSqrs();
+}
+function loseAndSameThing() {
+    countsqram = 0;
+    tryes = 3;
+    mainLives--;
+    setWhiteSqrs();
+    showWhiteSqrs();
+}
+function loseScreen() {
+    for (let i = 0; i < xbyx; i++) {
+        content.removeChild(section[i]);
+    }
+    document.getElementById("endLevelresult").innerHTML = sqram - 2;
+    xbyx = 3;
+    sqram = 3;
+    countsqram = 0;
+    tryes = 3;
+    mainLives = 3;
+
+    for (let i = 0; i < 3; i++) {
+        hearts[i].style.color = "#fff";
+    }
+    document.getElementById("gameMenu").classList.add("hide");
+    document.getElementById("endMenu").classList.remove("hide");
+}
+
+function clickfun() {
+    sqr.forEach((square) => {
+        square.addEventListener("click", (e) => {
+            //console.log(1);
+            if (e.target.dataset.value == 0) {
+                e.target.classList.add("miss");
+                tryes--;
+                e.target.style.pointerEvents = "none";
+                if (tryes == 0) {
+                    document.querySelector("body").classList.add("lose");
+                    hearts[mainLives - 1].style.color = "#6BABDF";
+
+                    for (let i = 0; i < xbyx * xbyx; i++) {
+                        sqr[i].classList.add("lose1");
+                        sqr[i].style.pointerEvents = "none";
+                    }
+                    setTimeout(() => {
+                        for (let i = 0; i < xbyx * xbyx; i++) {
+                            //sqr[i].classList.remove("right");
+                            if (
+                                sqr[i].classList.contains("right") ||
+                                sqr[i].classList.contains("miss")
+                            ) {
+                                sqr[i].classList.add("hide");
+                            }
+                        }
+                        // console.log(sqr);
+                    }, 1000);
+                    setTimeout(() => {
+                        for (let i = 0; i < xbyx * xbyx; i++) {
+                            sqr[i].classList.remove("right");
+                        }
+                        document.querySelector("body").classList.remove("lose");
+                        if (mainLives == 1) {
+                            loseScreen();
+                        } else {
+                            loseAndSameThing();
+                        }
+                    }, 1800);
+                }
+            } else {
+                e.target.classList.add("right");
+                e.target.style.pointerEvents = "none";
+                countsqram++;
+                if (countsqram == sqram) {
+                    for (let i = 0; i < xbyx * xbyx; i++) {
+                        sqr[i].style.pointerEvents = "none";
+                    }
+                    document.querySelector("body").classList.add("win");
+                    for (let i = 0; i < xbyx * xbyx; i++) {
+                        sqr[i].classList.add("win1");
+                    }
+                    setTimeout(() => {
+                        for (let i = 0; i < xbyx * xbyx; i++) {
+                            sqr[i].classList.remove("right");
+                            if (
+                                sqr[i].dataset.value == 1 ||
+                                sqr[i].classList.contains("miss")
+                            ) {
+                                sqr[i].classList.add("hide");
+                            }
+                        }
+                    }, 1000);
+                    setTimeout(() => {
+                        if (
+                            sqram - 1 == 3 ||
+                            sqram - 1 == 6 ||
+                            sqram - 1 == 9 ||
+                            sqram - 1 == 14 ||
+                            sqram - 1 == 19 ||
+                            sqram - 1 == 24 ||
+                            sqram - 1 == 30 ||
+                            sqram - 1 == 36 ||
+                            sqram - 1 == 42 ||
+                            sqram - 1 == 48 ||
+                            sqram - 1 == 55
+                        ) {
+                            xbyx++;
+                            clear();
+                            create();
+                            clickfun();
+                        }
+                        document.querySelector("body").classList.remove("win");
+                        winAndAdd();
+                    }, 1800);
+                }
+            }
+        });
+    });
+}
+clickfun();
+document.getElementById("tryAgainBtn").addEventListener("click", () => {
+    document.getElementById("endMenu").classList.add("hide");
+    document.getElementById("startMenu").classList.remove("hide");
+});
+document.getElementById("startMenu").addEventListener("click", () => {
+    document.getElementById("startMenu").classList.add("hide");
+    document.getElementById("gameMenu").classList.remove("hide");
+    
+    create();
+    clickfun();
+    setWhiteSqrs();
+    showWhiteSqrs();
+});
+
+    
+    </script>
+   </body>
+</html>
