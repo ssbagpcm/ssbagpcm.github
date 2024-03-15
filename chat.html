@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gemini - DannTeam</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <style>
+    .chat-container {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      height: 100vh;
+      position: relative; /* Tambahkan posisi relatif */
+    }
+
+    .chat-header {
+      text-align: center;
+      padding: 20px;
+      background-color: #4f46e5;
+      color: white;
+    }
+
+    .chat-content {
+      overflow-y: auto;
+      padding: 20px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .chat-bubble {
+      max-width: 70%;
+      margin-bottom: 16px;
+      position: relative;
+      border-radius: 12px;
+      padding: 12px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font yang bagus dan cocok untuk pesan */
+    }
+
+    .chat-bubble.user::before {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 10px 15px 10px 0;
+      border-color: transparent #ffffff transparent transparent;
+      right: -10px;
+      top: 6px;
+    }
+
+    .chat-bubble.bot::before {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 10px 0 10px 15px;
+      border-color: transparent transparent transparent #ffffff;
+      left: -10px;
+      top: 6px;
+    }
+
+    .loading-bubble {
+      display: inline-block;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      border: 4px solid #b8b8b8;
+      border-top-color: transparent;
+      animation: loading-spin 1s linear infinite;
+    }
+
+    @keyframes loading-spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .chat-footer {
+      padding: 20px;
+      background-color: #4f46e5;
+      text-align: center;
+    }
+
+    .chat-footer input:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
+    }
+
+    .chat-footer input::placeholder {
+      color: #a0aec0;
+    }
+
+    .chat-footer button:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Draggable Menu */
+    .circular-menu {
+      position: absolute;
+      top: calc(50% - 25px); /* Posisi menjadi paling pojok kiri bawah */
+      left: calc(100% + 10px); /* Posisi menjadi paling pojok kiri bawah */
+      transform: translateY(-50%);
+    }
+
+    .draggable-menu {
+      position: absolute;
+      top: calc(50% - 25px); /* Menambahkan jarak antara input dan menu */
+      right: calc(100% + 10px); /* Menambahkan jarak antara input dan menu */
+      transform: translate(-50%, -50%);
+    }
+
+    .circular-menu .circle {
+      width: 50px;
+      height: 50px;
+      background: #4f46e5;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.3s ease;
+    }
+
+    .circular-menu .circle:hover {
+      transform: scale(1.1);
+    }
+
+    .circular-menu .circle i {
+      font-size: 20px;
+    }
+
+    /* Efek Hover yang keren pada input dan tombol paper plane */
+    .chat-footer input:hover,
+    .chat-footer button:hover {
+      filter: brightness(110%);
+    }
+
+    /* Perbaikan avatar circle user dan gemini (bot) */
+    .chat-bubble .avatar {
+      width: 40px; /* Diperbarui agar tidak terlalu kecil */
+      height: 40px; /* Diperbarui agar tidak terlalu kecil */
+    }
+
+    /* Spasi pada waktu pesan yang telah dikirim */
+    .chat-bubble.user .text-xs,
+    .chat-bubble.bot .text-xs {
+      margin-top: 6px; /* Diperbarui agar tidak nyatuh dengan pesan */
+    }
+
+    /* Chat untuk user di posisi kanan */
+    .chat-bubble.user {
+      margin-left: auto;
+      background-color: #6EE7B7; /* Warna untuk pesan user */
+      color: white;
+    }
+
+    /* Waktu pesan menjadi pojok kanan bawah */
+    .chat-bubble .text-xs {
+      position: absolute;
+      bottom: -20px;
+      right: 10px;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div class="chat-container">
+    <div class="chat-header">
+      <h1 class="text-3xl font-bold">Gemini</h1>
+    </div>
+    <div class="chat-content" id="geminiContent"></div>
+    <div class="chat-footer">
+      <div class="flex mb-4">
+        <div class="circular-menu">
+          <div class="circle" id="draggableMenu">
+            <i class="fas fa-ellipsis-v text-white"></i>
+          </div>
+        </div>
+        <input id="promptInput" type="text" class="border border-gray-300 px-4 py-2 rounded-md w-full mr-2" placeholder="Enter your prompt...">
+        <button id="generateBtn" class="bg-blue-500 text-white px-4 py-2 rounded-md"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Draggable Menu -->
+  <div class="draggable-menu hidden">
+    <input type="file">
+  </div>
+
+  <!-- SweetAlert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    const generateBtn = document.getElementById('generateBtn');
+    const promptInput = document.getElementById('promptInput');
+    const geminiContent = document.getElementById('geminiContent');
+    const draggableMenu = document.getElementById('draggableMenu');
+
+    generateBtn.addEventListener('click', async () => {
+      const prompt = promptInput.value;
+      if (!prompt) {
+        Swal.fire({
+          title: 'Masukkan Pesan!',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#4f46e5',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel'
+        });
+        return;
+      }
+
+      promptInput.value = '';
+
+      geminiContent.innerHTML += `
+      <div class="chat-bubble user flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg">
+        <div class="avatar w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center mr-3"><i class="fas fa-user"></i></div>
+        ${prompt}
+        <div class="text-xs text-gray-400">${new Date().toLocaleTimeString()}</div>
+      </div>
+      <div class="chat-bubble bot flex items-center px-4 py-2 bg-gray-300 text-gray-800 rounded-lg">
+        <div class="avatar w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center mr-3"><i class="fas fa-robot"></i></div>
+        <div class="loading-bubble mr-3"></div>Generating...
+        <div class="text-xs text-gray-400">${new Date().toLocaleTimeString()}</div>
+      </div>
+      `;
+
+      const response = await fetch(`/gemini?prompt=${prompt}`);
+      const content = await response.text();
+      geminiContent.innerHTML = geminiContent.innerHTML.replace('<div class="loading-bubble mr-3"></div>Generating...', content);
+    });
+
+    draggableMenu.addEventListener('click', () => {
+      const menu = document.querySelector('.draggable-menu');
+      menu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

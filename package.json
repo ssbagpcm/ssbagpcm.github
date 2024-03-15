@@ -1,0 +1,29 @@
+{
+  "name": "dann-gemini",
+  "version": "1.0.0-beta.1",
+  "description": "The Google Generative AI using Nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://replit.com/@danzfavboy/gemini"
+  },
+  "keywords": [
+    "gemini",
+    "gemini-ai",
+    "google",
+    "generative-ai",
+    "dann-gemini",
+    "DannTeam"
+  ],
+  "author": "DannTeam",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "@google/generative-ai": "^0.2.1",
+    "axios": "^1.6.7",
+    "express": "^4.18.3",
+    "g4f": "^1.4.2"
+  }
+}
