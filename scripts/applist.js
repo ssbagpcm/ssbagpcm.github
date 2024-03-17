@@ -9,6 +9,9 @@ createapp("calculator", "./apps/calculator.html", "img/calculator.ico", "Calcula
 createapp("vscode", "https://trinket.io/embed/python3/a5bd54189b", "img/vscode.ico", "Visual Studio Code");
 createapp("photos", "./apps/photos.html", "img/photos.ico", "Photos");
 createapp("snippingtool", "./apps/snippingtool.html", "img/snippingtool.ico", "Snippingtool");
+createapp("wikipedia", "./apps/wikipedia.html", "img/wikipedia.ico", "Wikipedia");
+createapp("chatbot", "./apps/chatai.html", "img/chatgpt.ico", "ChatGPT");
+createapp("tetris", "./apps/tetris.html", "img/tetris.ico", "Tetris");
 
 
 
