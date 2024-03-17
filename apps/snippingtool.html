@@ -1,1 +1,104 @@
-COMING SOON
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capture d'écran</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<style>
+    .snip-area {
+        position: absolute;
+        border: 2px dashed #000;
+        pointer-events: none;
+        z-index: 9999;
+        display: none;
+    }
+</style>
+</head>
+<body>
+    <h1>Capture d'écran</h1>
+    <button onclick="startCapture()">Sélectionner une zone</button>
+
+    <div class="snip-area"></div>
+
+    <script>
+        var startX, startY, endX, endY;
+        var snipArea = document.querySelector(".snip-area");
+
+        // Event listeners for mouse events
+        document.addEventListener("mousedown", handleMouseDown);
+        document.addEventListener("mousemove", handleMouseMove);
+        document.addEventListener("mouseup", handleMouseUp);
+
+        // Function to handle mouse down event
+        function handleMouseDown(e) {
+            startX = e.clientX;
+            startY = e.clientY;
+            snipArea.style.left = startX + "px";
+            snipArea.style.top = startY + "px";
+            snipArea.style.width = "0";
+            snipArea.style.height = "0";
+            snipArea.style.display = "block";
+        }
+
+        // Function to handle mouse move event
+        function handleMouseMove(e) {
+            if (!startX || !startY) return;
+
+            endX = e.clientX;
+            endY = e.clientY;
+            var width = Math.abs(endX - startX);
+            var height = Math.abs(endY - startY);
+
+            snipArea.style.width = width + "px";
+            snipArea.style.height = height + "px";
+
+            if (endX < startX) {
+                snipArea.style.left = endX + "px";
+            }
+
+            if (endY < startY) {
+                snipArea.style.top = endY + "px";
+            }
+        }
+
+        // Function to handle mouse up event
+        function handleMouseUp(e) {
+            if (!startX || !startY) return;
+
+            var left = Math.min(startX, endX);
+            var top = Math.min(startY, endY);
+            var width = Math.abs(endX - startX);
+            var height = Math.abs(endY - startY);
+
+            snipArea.style.display = "none";
+
+            // Capture the selected area using html2canvas
+            html2canvas(document.body, {
+                x: left,
+                y: top,
+                width: width,
+                height: height
+            }).then(function (canvas) {
+                // Convert canvas to image
+                var image = canvas.toDataURL("image/png");
+
+                // Create a link element to download the image
+                var link = document.createElement("a");
+                link.href = image;
+                link.download = "capture_ecran.png";
+
+                // Simulate a click on the link to trigger the download
+                document.body.appendChild(link);
+                link.click();
+
+                // Clean up after download
+                document.body.removeChild(link);
+            });
+
+            // Reset the coordinates
+            startX = startY = endX = endY = null;
+        }
+    </script>
+</body>
+</html>

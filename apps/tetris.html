@@ -1,0 +1,758 @@
+
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  
+
+    <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
+
+    <meta name="apple-mobile-web-app-title" content="CodePen">
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+
+    <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg" color="#111" />
+
+
+
+  
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
+
+
+  <title>CodePen - GameBoy Tetris Clone</title>
+
+    <link rel="canonical" href="https://codepen.io/dylangggg/pen/pQJzpz">
+  
+  
+  
+  
+<style>
+/* style.css */
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+
+  /* This centers our sketch horizontally. */
+  justify-content: center;
+
+  /* This centers our sketch vertically. */
+  align-items: center;
+  
+  background-color: black;
+}
+</style>
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+</head>
+
+<body translate="no">
+  
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.js'></script>
+      <script id="rendered-js" >
+var gridSpace = 30;
+
+var fallingPiece;
+var gridPieces = [];
+var lineFades = [];
+var gridWorkers = [];
+
+var currentScore = 0;
+var currentLevel = 1;
+var linesCleared = 0;
+
+var ticks = 0;
+var updateEvery = 15;
+var updateEveryCurrent = 15;
+var fallSpeed = gridSpace * 0.5;
+var pauseGame = false;
+var gameOver = false;
+
+var gameEdgeLeft = 150;
+var gameEdgeRight = 450;
+
+var colors = [
+'#ecb5ff',
+'#ffa0ab',
+'#8cffb4',
+'#ff8666',
+'#80c3f5',
+'#c2e77d',
+'#fdf9a1'];
+
+
+function setup() {
+  createCanvas(600, 540);
+
+  fallingPiece = new playPiece();
+  fallingPiece.resetPiece();
+  textFont('Trebuchet MS');
+}
+
+function draw() {
+  var colorDark = "#071820",
+  colorLight = "#344c57",
+  colorBackground = "#ecf4cb";
+
+  background(colorBackground);
+
+  //Right side info
+  fill(25);
+  noStroke();
+  rect(gameEdgeRight, 0, 150, height);
+  //Left side info
+  rect(0, 0, gameEdgeLeft, height);
+
+  fill(colorBackground);
+  //Score rectangle
+  rect(450, 50, 150, 70);
+  //Next piece rectangle
+  rect(460, 300, 130, 130, 5, 5);
+  //Level rectangle
+  rect(460, 130, 130, 60, 5, 5);
+  //Lines rectangle
+  rect(460, 200, 130, 60, 5, 5);
+
+
+  fill(colorLight);
+  //Score lines
+  rect(450, 55, 150, 20);
+  rect(450, 80, 150, 4);
+  rect(450, 110, 150, 4);
+
+  fill(colorBackground);
+  //Score banner
+  rect(460, 30, 130, 35, 5, 5);
+
+  strokeWeight(3);
+  noFill();
+  stroke(colorLight);
+  //Score banner inner rectangle
+  rect(465, 35, 120, 25, 5, 5);
+
+  //Next piece inner rectangle
+  stroke(colorLight);
+  rect(465, 305, 120, 120, 5, 5);
+  //Level inner rectangle
+  rect(465, 135, 120, 50, 5, 5);
+  //Lines inner rectangle
+  rect(465, 205, 120, 50, 5, 5);
+
+  //Draw the info labels
+  fill(25);
+  noStroke();
+  textSize(24);
+  textAlign(CENTER);
+  text("Score", 525, 55);
+  text("Level", 525, 158);
+  text("Lines", 525, 228);
+
+  //Draw the actual info
+  textSize(24);
+  textAlign(RIGHT);
+
+  //The score
+  text(currentScore, 560, 105);
+  text(currentLevel, 560, 180);
+  text(linesCleared, 560, 250);
+
+  stroke(colorDark);
+  line(gameEdgeRight, 0, gameEdgeRight, height);
+
+  fallingPiece.show();
+
+  if (keyIsDown(DOWN_ARROW)) {
+    updateEvery = 2;
+  } else {
+    updateEvery = updateEveryCurrent;
+  }
+
+  if (!pauseGame) {
+    ticks++;
+    if (ticks >= updateEvery) {
+      ticks = 0;
+      fallingPiece.fall(fallSpeed);
+    }
+  }
+
+  for (let i = 0; i < gridPieces.length; i++) {if (window.CP.shouldStopExecution(0)) break;
+    gridPieces[i].show();
+  }window.CP.exitedLoop(0);
+
+  for (let i = 0; i < lineFades.length; i++) {if (window.CP.shouldStopExecution(1)) break;
+    lineFades[i].show();
+  }window.CP.exitedLoop(1);
+
+  if (gridWorkers.length > 0) {
+    gridWorkers[0].work();
+  }
+
+  //Explain the controls
+  textAlign(CENTER);
+  fill(255);
+  noStroke();
+  textSize(14);
+  text("Controls:\n↑\n← ↓ →\n", 75, 175);
+  text("Left and Right:\nmove side to side", 75, 250);
+  text("Up:\nrotate", 75, 300);
+  text("Down:\nfall faster", 75, 350);
+
+  //Game over text
+  if (gameOver) {
+    fill(colorDark);
+    textSize(64);
+    textAlign(CENTER);
+    text("Game\nOver!", 300, 270);
+  }
+}
+
+function lineBar(y, index) {
+  this.pos = new p5.Vector(gameEdgeLeft, y);
+  this.width = gameEdgeRight - gameEdgeLeft;
+  this.index = index;
+
+  this.show = function () {
+    fill(255);
+    noStroke();
+    rect(this.pos.x, this.pos.y, this.width, gridSpace);
+
+    if (this.width + this.pos.x > this.pos.x) {
+      this.width -= 10;
+      this.pos.x += 5;
+    } else {
+      lineFades.splice(this.index, 1);
+      //shiftGridDown(this.pos.y, gridSpace);
+      gridWorkers.push(new worker(this.pos.y, gridSpace));
+    }
+  };
+}
+
+function keyPressed() {
+  if (!pauseGame) {
+    if (keyCode === LEFT_ARROW) {
+      fallingPiece.input(LEFT_ARROW);
+    } else if (keyCode === RIGHT_ARROW) {
+      fallingPiece.input(RIGHT_ARROW);
+    }
+    if (keyCode === UP_ARROW) {
+      fallingPiece.input(UP_ARROW);
+    }
+  }
+}
+
+function playPiece() {
+  this.pos = new p5.Vector(0, 0);
+  this.rotation = 0;
+  this.nextPieceType = Math.floor(Math.random() * 7);
+  this.nextPieces = [];
+  this.pieceType = 0;
+  this.pieces = [];
+  this.orientation = [];
+  this.fallen = false;
+
+  this.nextPiece = function () {
+    this.nextPieceType = pseudoRandom(this.pieceType);
+    this.nextPieces = [];
+
+    var points = orientPoints(this.nextPieceType, 0);
+    var xx = 525,yy = 365;
+
+    if (this.nextPieceType != 0 && this.nextPieceType != 3) {
+      xx += gridSpace * 0.5;
+    }
+
+    this.nextPieces.push(new square(xx + points[0][0] * gridSpace, yy + points[0][1] * gridSpace, this.nextPieceType));
+    this.nextPieces.push(new square(xx + points[1][0] * gridSpace, yy + points[1][1] * gridSpace, this.nextPieceType));
+    this.nextPieces.push(new square(xx + points[2][0] * gridSpace, yy + points[2][1] * gridSpace, this.nextPieceType));
+    this.nextPieces.push(new square(xx + points[3][0] * gridSpace, yy + points[3][1] * gridSpace, this.nextPieceType));
+  };
+  this.fall = function (amount) {
+    if (!this.futureCollision(0, amount, this.rotation)) {
+      this.addPos(0, amount);
+      this.fallen = true;
+    } else {
+      //WE HIT SOMETHING D:
+      if (!this.fallen) {
+        //Game over aka pause forever
+        pauseGame = true;
+        gameOver = true;
+      } else {
+        this.commitShape();
+      }
+    }
+  };
+  this.resetPiece = function () {
+    this.rotation = 0;
+    this.fallen = false;
+    this.pos.x = 330;
+    this.pos.y = -60;
+
+    this.pieceType = this.nextPieceType;
+
+    this.nextPiece();
+    this.newPoints();
+  };
+  this.newPoints = function () {
+    var points = orientPoints(this.pieceType, this.rotation);
+    this.orientation = points;
+    this.pieces = [];
+    this.pieces.push(new square(this.pos.x + points[0][0] * gridSpace, this.pos.y + points[0][1] * gridSpace, this.pieceType));
+    this.pieces.push(new square(this.pos.x + points[1][0] * gridSpace, this.pos.y + points[1][1] * gridSpace, this.pieceType));
+    this.pieces.push(new square(this.pos.x + points[2][0] * gridSpace, this.pos.y + points[2][1] * gridSpace, this.pieceType));
+    this.pieces.push(new square(this.pos.x + points[3][0] * gridSpace, this.pos.y + points[3][1] * gridSpace, this.pieceType));
+  };
+  //Whenever the piece gets rotated, this gets the new positions of the squares
+  this.updatePoints = function () {
+    if (this.pieces) {
+      var points = orientPoints(this.pieceType, this.rotation);
+      this.orientation = points;
+      for (var i = 0; i < 4; i++) {if (window.CP.shouldStopExecution(2)) break;
+        this.pieces[i].pos.x = this.pos.x + points[i][0] * gridSpace;
+        this.pieces[i].pos.y = this.pos.y + points[i][1] * gridSpace;
+      }window.CP.exitedLoop(2);
+    }
+  };
+  //Adds to the position of the piece and it's square objects
+  this.addPos = function (x, y) {
+    this.pos.x += x;
+    this.pos.y += y;
+
+    if (this.pieces) {
+      for (var i = 0; i < 4; i++) {if (window.CP.shouldStopExecution(3)) break;
+        this.pieces[i].pos.x += x;
+        this.pieces[i].pos.y += y;
+      }window.CP.exitedLoop(3);
+    }
+  };
+  //Checks for collisions after adding the x and y to the current positions and also applying the given rotation
+  this.futureCollision = function (x, y, rotation) {
+    var xx,yy,points = 0;
+    if (rotation != this.rotation) {
+      //Gets a new point orientation to check against
+      points = orientPoints(this.pieceType, rotation);
+    }
+
+    for (var i = 0; i < this.pieces.length; i++) {if (window.CP.shouldStopExecution(4)) break;
+      if (points) {
+        xx = this.pos.x + points[i][0] * gridSpace;
+        yy = this.pos.y + points[i][1] * gridSpace;
+      } else {
+        xx = this.pieces[i].pos.x + x;
+        yy = this.pieces[i].pos.y + y;
+      }
+      //Check against walls and bottom
+      if (xx < gameEdgeLeft || xx + gridSpace > gameEdgeRight || yy + gridSpace > height) {
+        return true;
+      }
+      //Check against all pieces in the main gridPieces array (stationary pieces)
+      for (var j = 0; j < gridPieces.length; j++) {if (window.CP.shouldStopExecution(5)) break;
+        if (xx === gridPieces[j].pos.x) {
+          if (yy >= gridPieces[j].pos.y && yy < gridPieces[j].pos.y + gridSpace) {
+            return true;
+          }
+          if (yy + gridSpace > gridPieces[j].pos.y && yy + gridSpace <= gridPieces[j].pos.y + gridSpace) {
+            return true;
+          }
+        }
+      }window.CP.exitedLoop(5);
+    }window.CP.exitedLoop(4);
+  };
+  //Handles input ;)
+  this.input = function (key) {
+    switch (key) {
+      case LEFT_ARROW:
+        if (!this.futureCollision(-gridSpace, 0, this.rotation)) {
+          this.addPos(-gridSpace, 0);
+        }
+        break;
+      case RIGHT_ARROW:
+        if (!this.futureCollision(gridSpace, 0, this.rotation)) {
+          this.addPos(gridSpace, 0);
+        }
+        break;
+      case UP_ARROW:
+        var rotation = this.rotation + 1;
+        if (rotation > 3) {
+          rotation = 0;
+        }
+        if (!this.futureCollision(gridSpace, 0, rotation)) {
+          this.rotate();
+        }
+        break;}
+
+  };
+  //Rotates the piece by one
+  this.rotate = function () {
+    this.rotation += 1;
+    if (this.rotation > 3) {
+      this.rotation = 0;
+    }
+    this.updatePoints();
+  };
+  //Displays the piece's square objects
+  this.show = function () {
+    for (var i = 0; i < this.pieces.length; i++) {if (window.CP.shouldStopExecution(6)) break;
+      this.pieces[i].show();
+    }window.CP.exitedLoop(6);
+    for (var i = 0; i < this.nextPieces.length; i++) {if (window.CP.shouldStopExecution(7)) break;
+      this.nextPieces[i].show();
+    }window.CP.exitedLoop(7);
+  };
+  //Add the pieces to the gridPieces
+  this.commitShape = function () {
+    for (var i = 0; i < this.pieces.length; i++) {if (window.CP.shouldStopExecution(8)) break;
+      gridPieces.push(this.pieces[i]);
+    }window.CP.exitedLoop(8);
+    this.resetPiece();
+    analyzeGrid();
+  };
+}
+
+function square(x, y, type) {
+  this.pos = new p5.Vector(x, y);
+  this.type = type;
+
+  this.show = function () {
+    strokeWeight(2);
+    var colorDark = "#092e1d",
+    colorMid = colors[this.type];
+
+    fill(colorMid);
+    stroke(25);
+    rect(this.pos.x, this.pos.y, gridSpace - 1, gridSpace - 1);
+
+    noStroke();
+    fill(255);
+    rect(this.pos.x + 6, this.pos.y + 6, 18, 2);
+    rect(this.pos.x + 6, this.pos.y + 6, 2, 16);
+    fill(25);
+    rect(this.pos.x + 6, this.pos.y + 20, 18, 2);
+    rect(this.pos.x + 22, this.pos.y + 6, 2, 16);
+  };
+}
+
+//Basically random with a bias against the same piece twice
+function pseudoRandom(previous) {
+  var roll = Math.floor(Math.random() * 8);
+  if (roll === previous || roll === 7) {
+    roll = Math.floor(Math.random() * 7);
+  }
+  return roll;
+}
+
+//Checks until it can no longer find any horizontal staights
+function analyzeGrid() {
+  var score = 0;
+  while (checkLines()) {if (window.CP.shouldStopExecution(9)) break;
+    score += 100;
+    linesCleared += 1;
+    if (linesCleared % 10 === 0) {
+      currentLevel += 1;
+      //Increase speed here
+      if (updateEveryCurrent > 4) {
+        updateEveryCurrent -= 1;
+      }
+    }
+  }window.CP.exitedLoop(9);
+  if (score > 100) {
+    score *= 2;
+  }
+  currentScore += score;
+}
+
+function checkLines() {
+  var count = 0;
+  var runningY = -1;
+  var runningIndex = -1;
+
+  gridPieces.sort(function (a, b) {
+    return a.pos.y - b.pos.y;
+  });
+
+  for (var i = 0; i < gridPieces.length; i++) {if (window.CP.shouldStopExecution(10)) break;
+    if (gridPieces[i].pos.y === runningY) {
+      count++;
+      if (count === 10) {
+        //YEEHAW
+        gridPieces.splice(runningIndex, 10);
+
+        lineFades.push(new lineBar(runningY));
+        return true;
+      }
+    } else {
+      runningY = gridPieces[i].pos.y;
+      count = 1;
+      runningIndex = i;
+    }
+  }window.CP.exitedLoop(10);
+  return false;
+}
+
+function worker(y, amount) {
+  this.amountActual = 0;
+  this.amountTotal = amount;
+  this.yVal = y;
+
+  this.work = function () {
+    if (this.amountActual < this.amountTotal) {
+      for (var j = 0; j < gridPieces.length; j++) {if (window.CP.shouldStopExecution(11)) break;
+        if (gridPieces[j].pos.y < y) {
+          gridPieces[j].pos.y += 5;
+        }
+      }window.CP.exitedLoop(11);
+      this.amountActual += 5;
+    } else {
+      gridWorkers.shift();
+    }
+  };
+}
+
+//Sorts out the block positions for a given type and rotation
+function orientPoints(pieceType, rotation) {
+  var results = [];
+  switch (pieceType) {
+    case 0:
+      switch (rotation) {
+        case 0:
+          results = [
+          [-2, 0],
+          [-1, 0],
+          [0, 0],
+          [1, 0]];
+
+          break;
+        case 1:
+          results = [
+          [0, -1],
+          [0, 0],
+          [0, 1],
+          [0, 2]];
+
+          break;
+        case 2:
+          results = [
+          [-2, 1],
+          [-1, 1],
+          [0, 1],
+          [1, 1]];
+
+          break;
+        case 3:
+          results = [
+          [-1, -1],
+          [-1, 0],
+          [-1, 1],
+          [-1, 2]];
+
+          break;}
+
+      break;
+    case 1:
+      switch (rotation) {
+        case 0:
+          results = [
+          [-2, -1],
+          [-2, 0],
+          [-1, 0],
+          [0, 0]];
+
+          break;
+        case 1:
+          results = [
+          [-1, -1],
+          [-1, 0],
+          [-1, 1],
+          [0, -1]];
+
+          break;
+        case 2:
+          results = [
+          [-2, 0],
+          [-1, 0],
+          [0, 0],
+          [0, 1]];
+
+          break;
+        case 3:
+          results = [
+          [-1, -1],
+          [-1, 0],
+          [-1, 1],
+          [-2, 1]];
+
+          break;}
+
+      break;
+    case 2:
+      switch (rotation) {
+        case 0:
+          results = [
+          [-2, 0],
+          [-1, 0],
+          [0, 0],
+          [0, -1]];
+
+          break;
+        case 1:
+          results = [
+          [-1, -1],
+          [-1, 0],
+          [-1, 1],
+          [0, 1]];
+
+          break;
+        case 2:
+          results = [
+          [-2, 0],
+          [-2, 1],
+          [-1, 0],
+          [0, 0]];
+
+          break;
+        case 3:
+          results = [
+          [-2, -1],
+          [-1, -1],
+          [-1, 0],
+          [-1, 1]];
+
+          break;}
+
+      break;
+    case 3:
+      results = [
+      [-1, -1],
+      [0, -1],
+      [-1, 0],
+      [0, 0]];
+
+      break;
+    case 4:
+      switch (rotation) {
+        case 0:
+          results = [
+          [-1, -1],
+          [-2, 0],
+          [-1, 0],
+          [0, -1]];
+
+          break;
+        case 1:
+          results = [
+          [-1, -1],
+          [-1, 0],
+          [0, 0],
+          [0, 1]];
+
+          break;
+        case 2:
+          results = [
+          [-1, 0],
+          [-2, 1],
+          [-1, 1],
+          [0, 0]];
+
+          break;
+        case 3:
+          results = [
+          [-2, -1],
+          [-2, 0],
+          [-1, 0],
+          [-1, 1]];
+
+          break;}
+
+      break;
+    case 5:
+      switch (rotation) {
+        case 0:
+          results = [
+          [-2, 0],
+          [-1, 0],
+          [-1, -1],
+          [0, 0]];
+
+          break;
+        case 1:
+          results = [
+          [-1, -1],
+          [-1, 0],
+          [-1, 1],
+          [0, 0]];
+
+          break;
+        case 2:
+          results = [
+          [-2, 0],
+          [-1, 0],
+          [0, 0],
+          [-1, 1]];
+
+          break;
+        case 3:
+          results = [
+          [-2, 0],
+          [-1, -1],
+          [-1, 0],
+          [-1, 1]];
+
+          break;}
+
+      break;
+    case 6:
+      switch (rotation) {
+        case 0:
+          results = [
+          [-2, -1],
+          [-1, -1],
+          [-1, 0],
+          [0, 0]];
+
+          break;
+        case 1:
+          results = [
+          [-1, 0],
+          [-1, 1],
+          [0, 0],
+          [0, -1]];
+
+          break;
+        case 2:
+          results = [
+          [-2, 0],
+          [-1, 0],
+          [-1, 1],
+          [0, 1]];
+
+          break;
+        case 3:
+          results = [
+          [-2, 0],
+          [-2, 1],
+          [-1, 0],
+          [-1, -1]];
+
+          break;}
+
+      break;}
+
+  return results;
+}
+//# sourceURL=pen.js
+    </script>
+
+  
+</body>
+
+</html>
