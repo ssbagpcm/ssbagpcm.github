@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#SCIENCES Project</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Kode Mono', monospace;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .main-content {
+            padding: 100px 20px;
+            text-align: left;
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            font-family: 'Roboto', sans-serif;
+            color: #ffffff;
+            background: none;
+            -webkit-text-fill-color: initial;
+            -webkit-box-reflect: none;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        h1:hover,
+        h2:hover,
+        h3:hover,
+        p:hover {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .cursor div {
+            position: absolute;
+            display: grid;
+            place-items: center;
+            div {
+                border: 1px solid #fff;
+                border-radius: 50%;
+                animation: pulse 2.5s linear infinite;
+                box-shadow: 0 0 50px 5px #d7abff6e;
+            }
+        }
+
+        .cursor div:nth-child(1),
+        .cursor div:nth-child(2) {
+            width: 100%;
+            height: 100%;
+        }
+
+        .cursor div:nth-child(1) {
+            transition: transform 0.2s ease-out;
+        }
+
+        .cursor div:nth-child(2) {
+            div {
+                background: #fff;
+                border-radius: 50%;
+                width: 4px;
+                height: 4px;
+            }
+            transition: transform 0.1s ease-out;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.8);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(0.8);
+            }
+        }
+
+        .word {
+            opacity: 0;
+            color: #ffffff;
+            transition: opacity 1s ease-in-out, text-shadow 0.3s;
+        }
+
+        .word:hover {
+            opacity: 1;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .fade-in-text {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+    </style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+    </style>
+</head>
+<body>
+    <div class="main-content" id="text-container">
+        <h1></h1>
+        <p id="project-description">
+            Dans une petite ville tranquille, au cœur de la campagne, vivait un jeune garçon nommé Léo. Léo était un élève de quatrième passionné par les sciences, notamment la physique et la chimie. Un jour, alors qu'il s'ennuyait pendant un cours de physique-chimie, une idée brillante lui traversa l'esprit.
+
+            Léo avait remarqué un schéma curieux dans ses notes de cours, un problème mathématique qui semblait lié aux concepts géométriques et mathématiques. Intrigué, il se mit à réfléchir intensément, griffonnant des équations sur son cahier entre les cours et après l'école.
+
+            Déterminé à résoudre ce mystère, Léo passa toute la soirée à travailler sur le problème. Malgré les difficultés et les moments de frustration, il persévéra avec acharnement, refusant de se laisser décourager. Ses parents le trouvèrent plongé dans ses livres de mathématiques bien après l'heure du dîner.
+
+            Finalement, après des heures de réflexion intense, Léo eut sa percée. Une formule mathématique claire et élégante lui vint à l'esprit, semblant résoudre le problème complexe qu'il avait identifié en classe.
+
+            Rempli d'excitation, Léo se précipita à l'école le lendemain pour montrer sa découverte à son professeur de physique-chimie. Le professeur fut impressionné par la créativité et l'ingéniosité de Léo, ainsi que par sa capacité à trouver une solution en si peu de temps.
+
+            Fier de son accomplissement, Léo partagea sa formule avec ses camarades de classe et fut acclamé comme un prodige mathématique en herbe. Son dévouement et sa persévérance lui avaient permis de transformer un moment d'ennui en une découverte scientifique remarquable en une seule soirée.
+
+            À partir de ce jour-là, Léo continua à poursuivre sa passion pour les sciences, sachant que rien n'était impossible avec suffisamment de travail acharné et de détermination.
+        </p>
+    </div>
+
+    <div class="cursor">
+        <div class="ring">
+            <div></div>
+        </div>
+        <div class="ring">
+            <div></div>
+        </div>
+    </div>
+
+    <script>
+        var textContainer = document.getElementById('text-container');
+        var words = textContainer.innerText.split(/\s+/);
+        textContainer.innerHTML = words.map(function (word) {
+            return '<span class="word">' + word + '</span> ';
+        }).join('');
+
+        var wordSpans = document.querySelectorAll('.word');
+        window.onload = function () {
+            animateWords(wordSpans, 0);
+            fadeInNavLinks();
+        };
+
+        function animateWords(spans, index) {
+            if (index < spans.length) {
+                spans[index].style.opacity = 1;
+                setTimeout(function () {
+                    animateWords(spans, index + 1);
+                }, 290);
+            }
+        }
+
+        function fadeInNavLinks() {
+            var navLinks = document.querySelectorAll('.fade-in-text');
+            navLinks.forEach(function (link, index) {
+                setTimeout(function () {
+                    link.style.opacity = 1;
+                }, index * 200);
+            });
+        }
+
+        document.addEventListener('mousemove', function (e) {
+            document.querySelector('.cursor div:nth-child(1)').style.transform =
+                `translateX(calc(${e.clientX}px - 1.25rem)) translateY(calc(${e.clientY}px - 1.25rem))`;
+        });
+    </script>
+</body>
+</html>
