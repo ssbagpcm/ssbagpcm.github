@@ -1,129 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assemblage des Codes</title>
     <style>
         body {
-            background-color: #121212;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #fff;
+            background: #000;
+            font-size: 18px;
+            font-weight: 400;
+            font-family: "-apple-system", "BlinkMacSystemFont", "Roboto", "Helvetica Neue", sans-serif !important;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        #page {
+            position: relative;
+            transition: 1s all ease-in-out;
+        }
+
+        #page.menuopen {
+            opacity: .6;
+            filter: blur(20px);
+            transform: scale(1.2);
+        }
+
+        section {
+            display: flex;
+            min-height: 100vh;
+            padding: 50px;
+            justify-content: center;
+            align-items: center;
+            background: #222;
+            color: #fff;
+            position: relative;
+        }
+
+        section:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #000;
+            opacity: .5;
+            height: 100%;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 120px;
             margin: 0;
-            padding: 0;
+            z-index: 2;
+            position: relative;
+            text-transform: uppercase;
+            font-weight: bold;
         }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
+        header {
+            z-index: 99999;
+            position: relative;
         }
 
-        li {
-            margin: 10px 0;
+        #logo {
+            position: fixed;
+            top: 30px;
+            left: 0;
+            right: 0;
+            width: 100px;
+            height: auto;
+            margin: 0 auto;
+            opacity: 1;
+            transition: .3s all cubic-bezier(0.075, 0.82, 0.165, 1) .6s;
         }
 
-        a {
-            color: #4CAF50;
+        nav {
+            display: flex;
+            height: 100px;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+            position: fixed;
+            left: 0;
+            right: 0;
+            width: 500px;
+            margin: 0 auto;
+            top: 120px;
+            background-color: rgba(255, 255, 255, .05);
+            border-radius: 200px;
+            z-index: 9;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, .06);
+            transition: 1s all cubic-bezier(0.075, 0.82, 0.165, 1) .2s;
+        }
+
+        nav a {
+            color: #fff;
             text-decoration: none;
+            font-weight: 700;
+            display: block;
+            padding: 10px 20px;
+            line-height: 1;
+            font-size: 15px;
+            letter-spacing: 2px;
+            text-transform: lowercase;
+            transition: .3s all cubic-bezier(0.075, 0.82, 0.165, 1) .6s;
+        }
+
+        nav button {
+            -webkit-appearance: none;
+            background: rgba(0, 0, 0, .3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, .1);
+            position: absolute;
+            z-index: 99;
+            left: 0;
+            margin: auto;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 60px;
+            height: 60px;
+            border-radius: 100%;
+            outline: 0;
+            border: 0;
+            cursor: pointer;
+            transition: .3s all cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
+            transform: scale(0);
+        }
+
+        nav button span {
+            width: 40%;
+            background: #fff;
+            height: 2px;
+            display: block;
+            margin: 5px auto;
+            transform: scaleX(0);
+            transition: .6s transform cubic-bezier(0.075, 0.82, 0.165, 1) 0s, .3s margin ease-in 0s;
+        }
+
+        nav button:hover {
+            border-color: rgba(255, 255, 255, .5);
+        }
+
+        nav button:hover span {
+            margin: 10px auto;
+        }
+
+        header.sticky #logo {
+            top: 0;
+            transform: scale(.8);
+            opacity: 0;
+            transition-delay: 0.5s;
+        }
+
+        header.sticky nav {
+            top: 20px;
+            padding: 0;
+            width: 90px;
+            height: 90px;
+            transition-delay: 0.5s;
+        }
+
+        header.sticky nav button {
+            transform: scale(1);
+            transition-delay: 0.6s;
+        }
+
+        header.sticky nav button span {
+            transform: scaleX(1);
+            transition: .6s transform cubic-bezier(0.075, 0.82, 0.165, 1) .8s, .3s margin ease-in 0s;
+        }
+
+        header.sticky nav a {
+            padding: 0;
+            opacity: 0;
+            letter-spacing: 0px;
+            transform: scale(0.3);
+            transition-delay: 0.2s;
+        }
+
+        #fixedlink {
+            position: fixed;
+            bottom: 0;
+            z-index: 9999;
+            right: 0;
+            left: 0;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 20px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 50px;
         }
 
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
+        td {
+            padding: 20px;
+            text-align: center;
         }
 
-        th {
-            background-color: #333;
-            color: #ffffff;
+        td h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
         }
 
-        h1 {
-            color: #4CAF50;
+        td p {
+            margin: 0;
+            font-size: 18px;
         }
 
-        p {
-            margin-top: 10px;
-        }
-
-        code {
-            background-color: #333;
-            color: #ffffff;
-            padding: 2px 5px;
-            border-radius: 4px;
-        }
-
-        .btn-green {
-            background-color: #4CAF50;
-            color: #ffffff;
-            padding: 10px 15px;
+        td a {
+            color: #fff;
             text-decoration: none;
-            border-radius: 4px;
-            display: inline-block;
+            font-weight: 700;
+            padding: 10px 20px;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        td a:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        section#knowledge ul {
+            padding-left: 20px;
+        }
+
+        section#knowledge ul li {
+            margin-bottom: 10px;
         }
     </style>
-    <title>SCIENCES Project</title>
 </head>
+
 <body>
-    <ul>
-        <!-- Liens -->
-        <li><a href="https://www.mediafire.com/file/ywodbmo6j8l1c25/sciences.torrent/file">SCIENCES.torrent</a></li>
-        <li><a href="https://huggingface.co/datasets/ssbagpc/sciencess/resolve/main/wikipedia_en_astronomy_maxi_2023-11.zim?download=true">Astronomy-en</a></li>
-        <li><a href="https://huggingface.co/datasets/ssbagpc/sciencess/resolve/main/wikipedia_en_chemistry_maxi_2023-11.zim?download=true">Chemistry-en</a></li>
-        <li><a href="https://huggingface.co/datasets/ssbagpc/sciencess/resolve/main/wikipedia_en_climate_change_maxi_2023-11.zim?download=true">Ecology-en</a></li>
-        <li><a href="https://huggingface.co/datasets/ssbagpc/sciencess/resolve/main/wikipedia_en_computer_maxi_2023-11.zim?download=true">Computer science-en</a></li>
-        <li><a href="https://huggingface.co/datasets/ssbagpc/sciencess/resolve/main/wikipedia_en_geography_maxi_2023-11.zim?download=true">Geography-en</a></li>
-        <li><a href="https://huggingface.co/datasets/ssbagpc/sciencess/resolve/main/wikipedia_en_history_maxi_2023-10.zim?download=true">History-en</a></li>
-        <li><a href="https://huggingface.co/datasets/ssbagpc/sciencess/resolve/main/wikipedia_en_mathematics_maxi_2023-11.zim?download=true">Mathematics-en</a></li>
-        <li><a href="https://huggingface.co/datasets/ssbagpc/sciencess/resolve/main/wikipedia_en_medicine_2023-11.zim?download=true">Medicine-en</a></li>
-        <li><a href="https://huggingface.co/datasets/ssbagpc/sciencess/resolve/main/wikipedia_en_physics_maxi_2023-11.zim?download=true">Physics-en</a></li>
-        <li><a href="https://huggingface.co/datasets/ssbagpc/sciencess/resolve/main/wikipedia_en_sociology_maxi_2023-10.zim?download=true">Sociology-en</a></li>
-        
-        <!-- ... (ajoutez les autres liens et boutons) -->
-    </ul>
 
-    <table>
-        <!-- Tableau -->
-        <tr>
-            <td>
-                <h1>GIT</h1>
-                <p><code>git clone https://huggingface.co/datasets/ssbagpc/sciencess</code></p>
-            </td>
-            <td>
-                <h1>TORRENT</h1>
-                <p><a href="https://huggingface.co/datasets/ssbagpc/sciencess/resolve/main/sciences.torrent?download=true" class="btn-green" target="_blank">Download Torrent</a></p>
-            </td>
-            <td>
-                <h1>#⨜.৻.Ι.Ξ.Π.৻.Ξ.⨜</h1>
-                The #SCIENCES Project stands out as a visionary enterprise aimed at revolutionizing scientific exploration and simulation through a comprehensive software platform. At the intersection of advanced artificial intelligence, ultra-realistic simulation maps, and other innovative features, this ambitious initiative establishes itself as an essential hub for all enthusiasts of scientific knowledge.
+    <header id="myHeader" class="">
+        <svg id="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 714.6 401.1">
+            <path fill="#fff" fill-rule="evenodd" d="https://raw.githubusercontent.com/ssbagpcm/files/main/_68ab35de-1e61-4475-ab90-6606984a0511.jpg" />
+        </svg>
+        <nav>
+            <a href="index.html">sciences</a>
+            <a href="#git">GIT</a>
+            <a href="#torrent">TORRENT</a>
+            <a href="#explanations">explanations</a>
+            <button id="openmenu">
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
 
-Superpowerful Artificial Intelligence: At the heart of the project lies a remarkably powerful artificial intelligence designed to provide an immersive and intelligent user experience. Endowed with exceptional adaptability, this AI guides the user in solving complex problems, analyzing massive datasets, and creating predictive models.
+    <div id="page" class="">
+        <section id="vision" style="background-image:url()">
+            <h1># SCIENCES</h1>
+        </section>
+        <section id="vision" style="background-image:url()">
+            <h1>RESSOURCES.</h1>
+        </section>
+        <section id="explanations" style="background-image:url()">
+            <h1>Explanations.</h1>
+        </section>
+        <section id="xcvb" style="background-image:url()">
+            <p>The #SCIENCES Project stands out as a visionary enterprise aimed at revolutionizing scientific exploration and simulation through a comprehensive software platform. At the intersection of advanced artificial intelligence, ultra-realistic simulation maps, and other innovative features, this ambitious initiative establishes itself as an essential hub for all enthusiasts of scientific knowledge. Superpowerful Artificial Intelligence: At the heart of the project lies a remarkably powerful artificial intelligence designed to provide an immersive and intelligent user experience. Endowed with exceptional adaptability, this AI guides the user in solving complex problems, analyzing massive datasets, and creating predictive models. Ultra-Realistic Simulation Maps: Explore virtual worlds with striking realism thanks to simulation maps crafted with meticulous scientific precision. These virtual environments faithfully replicate the physical and chemical laws, providing an ideal platform for immersive experiences and a profound understanding of natural phenomena. Cool Features: Beyond simulation capabilities, the #SCIENCES software distinguishes itself with a range of innovative features. Advanced data visualization tools, pre-trained machine learning models for sophisticated analyses, and real-time collaboration features are major assets empowering users to push the boundaries of knowledge. In-Depth Exploration of Scientific Themes: Quantum Physics and String Theory: Delve into the infinitely small with detailed simulations of subatomic particles and explore the nuances of string theory with unparalleled precision. Astronomy and Astrophysics: Travel through infinite space with sophisticated stellar models, solar system simulations, and captivating exploration of distant galaxies. Molecular Biology: Scrutinize the world of living organisms at the molecular level, analyzing biological structures with exceptional precision, opening new perspectives for medical and biotechnological research. Geology and Earth Sciences: Explore geological mysteries with realistic 3D models, delve into the processes that shaped our planet, and study tectonic phenomena with unmatched precision. Advanced Engineering: Tackle complex engineering projects with cutting-edge simulations, propelling technological innovation to new heights. The #SCIENCES Project thus presents itself as a bold initiative, merging the power of artificial intelligence with advanced simulations, offering an unparalleled experience for all science enthusiasts. This software serves as a gateway to new discoveries, catalyzing the evolution of scientific knowledge.</p>
+        </section>
+        <section id="git" style="background-image:url()">
+            <h1>INSTALL WITH GIT.</h1>
+        </section>
+        <section id="knowledge" style="background-image:url()">
+            <p>git clone https://huggingface.co/datasets/ssbagpcm/sciencess</p>
+        </section>
+      
+        <section id="torrent" style="background-image:url()">
+            <h1>INSTALL WITH TORRENT.</h1>
+        </section>
+        <section id="knowledge" style="background-image:url()">
+            <p>https://huggingface.co/datasets/ssbagpc/sciencess/resolve/main/sciences.torrent?download=true</p>
+        </section>
+    </div>
+    <script>
+        // JavaScript du deuxième code
+        document.addEventListener('DOMContentLoaded', function() {
+            var header = document.getElementById('myHeader');
+            var page = document.getElementById('page');
+            var openMenuButton = document.getElementById('openmenu');
 
-Ultra-Realistic Simulation Maps: Explore virtual worlds with striking realism thanks to simulation maps crafted with meticulous scientific precision. These virtual environments faithfully replicate the physical and chemical laws, providing an ideal platform for immersive experiences and a profound understanding of natural phenomena.
+            window.addEventListener('scroll', function() {
+                page.classList.remove('menuopen');
+                if (window.scrollY >= 100) {
+                    header.classList.add('sticky');
+                } else {
+                    header.classList.remove('sticky');
+                }
+            });
 
-Cool Features: Beyond simulation capabilities, the #SCIENCES software distinguishes itself with a range of innovative features. Advanced data visualization tools, pre-trained machine learning models for sophisticated analyses, and real-time collaboration features are major assets empowering users to push the boundaries of knowledge.
+            // Event listener to remove the sticky class when the button is clicked
+            openMenuButton.addEventListener('click', function() {
+                header.classList.remove('sticky');
+                page.classList.add('menuopen');
+            });
 
-In-Depth Exploration of Scientific Themes:
+            var links = document.querySelectorAll('a[href^="#"]');
 
-Quantum Physics and String Theory: Delve into the infinitely small with detailed simulations of subatomic particles and explore the nuances of string theory with unparalleled precision.
+            links.forEach(function(link) {
+                link.addEventListener('click', function(event) {
+                    // Prevent the default action
+                    event.preventDefault();
 
-Astronomy and Astrophysics: Travel through infinite space with sophisticated stellar models, solar system simulations, and captivating exploration of distant galaxies.
+                    // Get the target element
+                    var targetId = this.getAttribute('href');
+                    var targetElement = document.querySelector(targetId);
 
-Molecular Biology: Scrutinize the world of living organisms at the molecular level, analyzing biological structures with exceptional precision, opening new perspectives for medical and biotechnological research.
+                    // Smooth scroll to target
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 
-Geology and Earth Sciences: Explore geological mysteries with realistic 3D models, delve into the processes that shaped our planet, and study tectonic phenomena with unmatched precision.
-
-Advanced Engineering: Tackle complex engineering projects with cutting-edge simulations, propelling technological innovation to new heights.
-
-The #SCIENCES Project thus presents itself as a bold initiative, merging the power of artificial intelligence with advanced simulations, offering an unparalleled experience for all science enthusiasts. This software serves as a gateway to new discoveries, catalyzing the evolution of scientific knowledge.
-            </td>
-        </tr>
-        <!-- ... (ajoutez le reste du tableau) -->
-    </table>
 </body>
+
 </html>
