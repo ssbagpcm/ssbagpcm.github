@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperoperators</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+
+        body {
+            background-color: #1e1e1e;
+            color: #c7c7c7;
+            font-family: 'Lilita One', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h1, h2 {
+            color: #ffcc00;
+        }
+
+        .menu button, .input-form button {
+            background-color: #333;
+            color: #ffcc00;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .menu button:hover, .input-form button:hover {
+            background-color: #555;
+        }
+
+        .input-form input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 5px;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #333;
+            color: #ffcc00;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            border-radius: 50%;
+        }
+
+        .theme-toggle.light {
+            background-color: #ffcc00;
+            color: #333;
+        }
+
+        .light-theme {
+            background-color: #f0f0f0;
+            color: #1e1e1e;
+        }
+
+        .light-theme h1, .light-theme h2 {
+            color: #1e1e1e;
+        }
+
+        .light-theme .menu button, .light-theme .input-form button {
+            background-color: #ccc;
+            color: #1e1e1e;
+        }
+
+        .light-theme .menu button:hover, .light-theme .input-form button:hover {
+            background-color: #aaa;
+        }
+
+        .light-theme .input-form input {
+            background-color: #eee;
+            color: #1e1e1e;
+            border: 1px solid #bbb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="theme-toggle" onclick="toggleTheme()">☀️</button>
+        <h1>HYPEROPERATORS</h1>
+        <div class="menu">
+            <button onclick="showInputForm('multiplication')">Multiplication</button>
+            <button onclick="showInputForm('exponentiation')">Exponentiation</button>
+            <button onclick="showInputForm('tetration')">Tetration</button>
+            <button onclick="showInputForm('pentation')">Pentation</button>
+            <button onclick="showInputForm('hexation')">Hexation</button>
+        </div>
+        <div class="input-form" id="input-form" style="display:none;">
+            <h2 id="operation-title"></h2>
+            <input type="number" id="base" placeholder="Enter base">
+            <input type="number" id="times" placeholder="Enter times" style="display:none;">
+            <input type="number" id="exponent" placeholder="Enter exponent" style="display:none;">
+            <input type="number" id="height" placeholder="Enter height" style="display:none;">
+            <input type="number" id="level" placeholder="Enter level" style="display:none;">
+            <input type="number" id="steps" placeholder="Enter steps" style="display:none;">
+            <button onclick="calculate()">Calculate</button>
+            <button onclick="goBack()">Back</button>
+        </div>
+        <div class="result" id="result" style="display:none;">
+            <h2>Result</h2>
+            <p id="result-value"></p>
+        </div>
+    </div>
+    <script>
+        function showInputForm(operation) {
+            document.getElementById('input-form').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('operation-title').textContent = operation.charAt(0).toUpperCase() + operation.slice(1);
+
+            document.getElementById('base').style.display = 'block';
+            document.getElementById('times').style.display = 'none';
+            document.getElementById('exponent').style.display = 'none';
+            document.getElementById('height').style.display = 'none';
+            document.getElementById('level').style.display = 'none';
+            document.getElementById('steps').style.display = 'none';
+
+            switch (operation) {
+                case 'multiplication':
+                    document.getElementById('times').style.display = 'block';
+                    break;
+                case 'exponentiation':
+                    document.getElementById('exponent').style.display = 'block';
+                    break;
+                case 'tetration':
+                    document.getElementById('height').style.display = 'block';
+                    break;
+                case 'pentation':
+                    document.getElementById('level').style.display = 'block';
+                    break;
+                case 'hexation':
+                    document.getElementById('steps').style.display = 'block';
+                    break;
+            }
+        }
+
+        function goBack() {
+            document.getElementById('input-form').style.display = 'none';
+            document.getElementById('result').style.display = 'none';
+        }
+
+        function calculate() {
+            const operation = document.getElementById('operation-title').textContent.toLowerCase();
+            const base = parseInt(document.getElementById('base').value);
+            let result;
+
+            switch (operation) {
+                case 'multiplication':
+                    const times = parseInt(document.getElementById('times').value);
+                    result = iterMultiplication(base, times);
+                    break;
+                case 'exponentiation':
+                    const exponent = parseInt(document.getElementById('exponent').value);
+                    result = iterExponentiation(base, exponent);
+                    break;
+                case 'tetration':
+                    const height = parseInt(document.getElementById('height').value);
+                    result = iterTetration(base, height);
+                    break;
+                case 'pentation':
+                    const level = parseInt(document.getElementById('level').value);
+                    result = iterPentation(base, level);
+                    break;
+                case 'hexation':
+                    const steps = parseInt(document.getElementById('steps').value);
+                    result = iterHexation(base, steps);
+                    break;
+            }
+
+            document.getElementById('result-value').textContent = result;
+            document.getElementById('result').style.display = 'block';
+        }
+
+        function iterMultiplication(base, times) {
+            let result = 0;
+            for (let i = 0; i < times; i++) {
+                result += base;
+            }
+            return result;
+        }
+
+        function iterExponentiation(base, exponent) {
+            let result = 1;
+            for (let i = 0; i < exponent; i++) {
+                result *= base;
+            }
+            return result;
+        }
+
+        function iterTetration(base, height) {
+            let result = base;
+            for (let i = 0; i < height - 1; i++) {
+                result = iterExponentiation(base, result);
+            }
+            return result;
+        }
+
+        function iterPentation(base, level) {
+            let result = base;
+            for (let i = 0; i < level - 1; i++) {
+                result = iterTetration(base, result);
+            }
+            return result;
+        }
+
+        function iterHexation(base, steps) {
+            let result = base;
+            for (let i = 0; i < steps - 1; i++) {
+                result = iterPentation(base, result);
+            }
+            return result;
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.querySelector('.theme-toggle');
+            body.classList.toggle('light-theme');
+
+            if (body.classList.contains('light-theme')) {
+                themeToggle.textContent = '🌙';
+                themeToggle.classList.add('light');
+            } else {
+                themeToggle.textContent = '☀️';
+                themeToggle.classList.remove('light');
+            }
+        }
+    </script>
+</body>
+</html>
