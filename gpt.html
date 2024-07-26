@@ -1,14 +1,17 @@
-<html><head><base href="https://www.GPT5.ai?"><meta charset="UTF-8">
+<html>
+<head>
+  <base href="https://www.GPT5.ai?">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ChatGPT Interface</title>
   <style>
-  @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
-  
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Playwrite+CA:wght@100..400&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
     :root {
       --bg-color: #000;
       --chat-bg: #ffffff; /* Couleur de fond des messages */
       --header-bg: #000;
-      --input-bg: #ffffff; /* Fond de la zone de texte */
+      --input-bg: transparent; /* Fond de la zone de texte transparent */
       --text-color: #000; /* Couleur du texte */
       --border-color: #ffffff; /* Bordures blanches */
       --accent-color: #ffffff;
@@ -143,8 +146,8 @@
       border: 1px solid var(--border-color); /* Bordures blanches */
       border-radius: 0.5rem;
       font-size: 1rem;
-      background-color: var(--input-bg); /* Fond de la zone de texte en blanc */
-      color: var(--text-color); /* Texte de la zone de texte en noir */
+      background-color: var(--input-bg); /* Fond de la zone de texte transparent */
+      color: var(--text-color); /* Texte par défaut en noir */
       resize: none;
       min-height: 60px;
       max-height: 200px;
@@ -152,6 +155,9 @@
     .chat-input textarea:focus {
       outline: none;
       box-shadow: 0 0 0 2px var(--accent-color);
+    }
+    .chat-input textarea.typing {
+      color: var(--accent-color); /* Texte en blanc lors de la saisie */
     }
     .send-btn {
       background-color: var(--accent-color);
@@ -175,156 +181,162 @@
       font-family: 'Roboto Condensed', monospace;
     }
   </style>
-  </head>
-  <body>
-    <div class="app-container">
-      <div class="sidebar">
-        <button class="new-chat-btn">Nouvelle conversation</button>
-        <ul class="conversation-list" id="conversationList">
-          <!-- Les conversations seront ajoutées ici dynamiquement -->
-        </ul>
-      </div>
-      <div class="chat-container">
-        <div class="chat-header">
-          ChatGPT
-        </div>
-        <div class="chat-messages" id="chatMessages">
-          <!-- Les messages seront ajoutés ici dynamiquement -->
-        </div>
-        <form id="chatForm" class="chat-input">
-          <textarea id="userInput" placeholder="Tapez votre message ici..." required></textarea>
-          <button type="submit" class="send-btn">Envoyer</button>
-        </form>
-      </div>
+</head>
+<body>
+  <div class="app-container">
+    <div class="sidebar">
+      <button class="new-chat-btn">Nouvelle conversation</button>
+      <ul class="conversation-list" id="conversationList">
+        <!-- Les conversations seront ajoutées ici dynamiquement -->
+      </ul>
     </div>
-  
-    <script>
-      const chatMessages = document.getElementById('chatMessages');
-      const chatForm = document.getElementById('chatForm');
-      const userInput = document.getElementById('userInput');
-      const conversationList = document.getElementById('conversationList');
-      const newChatBtn = document.querySelector('.new-chat-btn');
-  
-      let conversations = [];
-      let currentConversationId = null;
-  
-      function addMessage(content, isUser = false) {
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message');
-        messageDiv.classList.add(isUser ? 'user-message' : 'gpt5-message');
-        messageDiv.textContent = content;
-        chatMessages.appendChild(messageDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-  
-        if (currentConversationId !== null) {
-          conversations[currentConversationId].messages.push({
-            content,
-            isUser
-          });
-        }
-      }
-  
-      async function getGPT5Response(message) {
-        // Dans une implémentation réelle, cela ferait un appel API à GPT-5
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve("AI COMING SOON, have a good day ! ;)");
-          }, 1000);
+    <div class="chat-container">
+      <div class="chat-header">
+        ChatGPT
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <!-- Les messages seront ajoutés ici dynamiquement -->
+      </div>
+      <form id="chatForm" class="chat-input">
+        <textarea id="userInput" placeholder="Tapez votre message ici..." required></textarea>
+        <button type="submit" class="send-btn">Envoyer</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const chatMessages = document.getElementById('chatMessages');
+    const chatForm = document.getElementById('chatForm');
+    const userInput = document.getElementById('userInput');
+    const conversationList = document.getElementById('conversationList');
+    const newChatBtn = document.querySelector('.new-chat-btn');
+
+    let conversations = [];
+    let currentConversationId = null;
+
+    function addMessage(content, isUser = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message');
+      messageDiv.classList.add(isUser ? 'user-message' : 'gpt5-message');
+      messageDiv.textContent = content;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      if (currentConversationId !== null) {
+        conversations[currentConversationId].messages.push({
+          content,
+          isUser
         });
       }
-  
-      function createNewConversation() {
-        const newConversationId = conversations.length;
-        conversations.push({
-          id: newConversationId,
-          title: `Conversation ${newConversationId + 1}`,
-          messages: []
-        });
-        addConversationToSidebar(newConversationId);
-        switchToConversation(newConversationId);
-      }
-  
-      function addConversationToSidebar(conversationId) {
-        const conversationItem = document.createElement('li');
-        conversationItem.classList.add('conversation-item');
-        conversationItem.innerHTML = `
-          <span class="conversation-title">${conversations[conversationId].title}</span>
-          <div class="conversation-actions">
-            <button class="edit-btn" title="Modifier">Edit</button>
-            <button class="delete-btn" title="Supprimer">Del</button>
-          </div>
-        `;
-        conversationItem.querySelector('.conversation-title').addEventListener('click', () => switchToConversation(conversationId));
-        conversationItem.querySelector('.edit-btn').addEventListener('click', (e) => {
-          e.stopPropagation();
-          editConversationTitle(conversationId);
-        });
-        conversationItem.querySelector('.delete-btn').addEventListener('click', (e) => {
-          e.stopPropagation();
-          deleteConversation(conversationId);
-        });
-        conversationList.appendChild(conversationItem);
-      }
-  
-      function switchToConversation(conversationId) {
-        currentConversationId = conversationId;
-        chatMessages.innerHTML = '';
-        conversations[conversationId].messages.forEach(message => {
-          addMessage(message.content, message.isUser);
-        });
-      }
-  
-      function editConversationTitle(conversationId) {
-        const newTitle = prompt("Entrez le nouveau titre de la conversation:", conversations[conversationId].title);
-        if (newTitle && newTitle.trim() !== "") {
-          conversations[conversationId].title = newTitle.trim();
-          updateConversationList();
-        }
-      }
-  
-      function deleteConversation(conversationId) {
-        if (confirm("Êtes-vous sûr de vouloir supprimer cette conversation ?")) {
-          conversations.splice(conversationId, 1);
-          updateConversationList();
-          if (currentConversationId === conversationId) {
-            currentConversationId = null;
-            chatMessages.innerHTML = '';
-          }
-        }
-      }
-  
-      function updateConversationList() {
-        conversationList.innerHTML = '';
-        conversations.forEach((conversation, index) => {
-          addConversationToSidebar(index);
-        });
-      }
-  
-      chatForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const message = userInput.value.trim();
-        if (message) {
-          if (currentConversationId === null) {
-            createNewConversation();
-          }
-          addMessage(message, true);
-          userInput.value = '';
-          const response = await getGPT5Response(message);
-          addMessage(response);
-        }
+    }
+
+    async function getGPT5Response(message) {
+      // Dans une implémentation réelle, cela ferait un appel API à GPT-5
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve("AI COMING SOON, have a good day ! ;)");
+        }, 1000);
       });
-  
-      newChatBtn.addEventListener('click', createNewConversation);
-  
-      // Ajuster automatiquement la hauteur du textarea
-      userInput.addEventListener('input', function() {
-        this.style.height = 'auto';
-        this.style.height = (this.scrollHeight) + 'px';
+    }
+
+    function createNewConversation() {
+      const newConversationId = conversations.length;
+      conversations.push({
+        id: newConversationId,
+        title: `Conversation ${newConversationId + 1}`,
+        messages: []
       });
-  
-      // Créer une première conversation au chargement de la page
-      createNewConversation();
-    </script>
-  </body>
-  </html>
-  
+      addConversationToSidebar(newConversationId);
+      switchToConversation(newConversationId);
+    }
+
+    function addConversationToSidebar(conversationId) {
+      const conversationItem = document.createElement('li');
+      conversationItem.classList.add('conversation-item');
+      conversationItem.innerHTML = `
+        <span class="conversation-title">${conversations[conversationId].title}</span>
+        <div class="conversation-actions">
+          <button class="edit-btn" title="">Edit</button>
+          <button class="delete-btn" title="">Delete</button>
+        </div>
+      `;
+      conversationItem.querySelector('.conversation-title').addEventListener('click', () => switchToConversation(conversationId));
+      conversationItem.querySelector('.edit-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        editConversationTitle(conversationId);
+      });
+      conversationItem.querySelector('.delete-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        deleteConversation(conversationId);
+      });
+      conversationList.appendChild(conversationItem);
+    }
+
+    function switchToConversation(conversationId) {
+      currentConversationId = conversationId;
+      chatMessages.innerHTML = '';
+      conversations[conversationId].messages.forEach(message => {
+        addMessage(message.content, message.isUser);
+      });
+    }
+
+    function editConversationTitle(conversationId) {
+      const newTitle = prompt("Entrez le nouveau titre de la conversation:", conversations[conversationId].title);
+      if (newTitle && newTitle.trim() !== "") {
+        conversations[conversationId].title = newTitle.trim();
+        updateConversationList();
+      }
+    }
+
+    function deleteConversation(conversationId) {
+      if (confirm("Êtes-vous sûr de vouloir supprimer cette conversation ?")) {
+        conversations.splice(conversationId, 1);
+        updateConversationList();
+        if (currentConversationId === conversationId) {
+          currentConversationId = null;
+          chatMessages.innerHTML = '';
+        }
+      }
+    }
+
+    function updateConversationList() {
+      conversationList.innerHTML = '';
+      conversations.forEach((conversation, index) => {
+        addConversationToSidebar(index);
+      });
+    }
+
+    chatForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const message = userInput.value.trim();
+      if (message) {
+        if (currentConversationId === null) {
+          createNewConversation();
+        }
+        addMessage(message, true);
+        userInput.value = '';
+        const response = await getGPT5Response(message);
+        addMessage(response);
+      }
+    });
+
+    newChatBtn.addEventListener('click', createNewConversation);
+
+    // Ajuster automatiquement la hauteur du textarea
+    userInput.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = (this.scrollHeight) + 'px';
+      // Ajouter la classe pour changer la couleur du texte lors de la saisie
+      this.classList.add('typing');
+    });
+
+    userInput.addEventListener('blur', function() {
+      // Retirer la classe lorsque l'utilisateur arrête de taper
+      this.classList.remove('typing');
+    });
+
+    // Créer une première conversation au chargement de la page
+    createNewConversation();
+  </script>
+</body>
+</html>
