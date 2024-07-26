@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interface Sombre</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        #container {
+            display: flex;
+            width: 300%; /* Trois sections restantes */
+            height: 100vh;
+            transition: transform 1s ease, opacity 1s ease; /* Transition fluide */
+            transform: translateX(0);
+            perspective: 1000px; /* Perspective pour effet 3D */
+        }
+
+        .section {
+            width: 100vw; /* Largeur de la fenêtre */
+            height: 100vh; /* Hauteur de la fenêtre */
+            flex-shrink: 0; /* Empêche le rétrécissement */
+            box-sizing: border-box;
+            padding: 20px;
+            transition: background-color 1s ease, opacity 1s ease, transform 1s ease, filter 1s ease; /* Transitions améliorées */
+            opacity: 0; /* Sections invisibles par défaut */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: scale(0.8) rotateY(10deg); /* Réduction initiale de la taille et rotation 3D */
+            filter: brightness(70%) blur(10px); /* Assombrir et flou initial */
+        }
+
+        #left-section, #right-section {
+            background-color: #1e1e1e;
+        }
+
+        #middle-section {
+            background-color: #262626;
+        }
+
+        #html-viewer {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        #scientific-image {
+            max-width: 100%;
+            height: auto;
+            transition: transform 0.5s ease;
+        }
+
+        #scientific-image:hover {
+            transform: scale(1.1); /* Zoom sur l'image au survol */
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="left-section" class="section">
+            <iframe id="html-viewer" src="minecraft.html"></iframe>
+        </div>
+
+        <!-- Section HTML -->
+        <div id="middle-section" class="section">
+            <iframe id="html-viewer" src="presentation.html"></iframe>
+        </div>
+
+        <div id="right-section" class="section">
+            <iframe id="html-viewer" src="gpt.html"></iframe>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('container');
+            const sections = document.querySelectorAll('.section');
+            let currentSectionIndex = 1; // Début avec la section du milieu
+
+            // Fonction pour mettre à jour la section affichée
+            function updateSection() {
+                sections.forEach((section, index) => {
+                    if (index === currentSectionIndex) {
+                        section.style.opacity = 1; // Afficher la section active
+                        section.style.transform = 'scale(1) rotateY(0deg)'; // Réinitialiser la taille et la rotation
+                        section.style.filter = 'brightness(100%) blur(0)'; // Réinitialiser la luminosité et le flou
+                    } else {
+                        section.style.opacity = 0; // Masquer les autres sections
+                        section.style.transform = 'scale(0.8) rotateY(10deg)'; // Réduire la taille et appliquer une rotation
+                        section.style.filter = 'brightness(70%) blur(10px)'; // Assombrir et appliquer un flou
+                    }
+                });
+                container.style.transform = `translateX(-${currentSectionIndex * 100}vw)`;
+            }
+
+            // Initialisation de la section affichée
+            updateSection();
+
+            // Gestion des touches directionnelles
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'ArrowLeft') {
+                    // Passer à la section précédente
+                    if (currentSectionIndex > 0) {
+                        currentSectionIndex--;
+                        updateSection();
+                    }
+                } else if (event.key === 'ArrowRight') {
+                    // Passer à la section suivante
+                    if (currentSectionIndex < 2) { // Ajusté pour 3 sections
+                        currentSectionIndex++;
+                        updateSection();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
