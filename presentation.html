@@ -1,426 +1,286 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les Mathématiques : La Langue de l'Univers</title>
+<html><head><base href="https://www.GPT5.ai?">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les Sciences : Un Monde Fascinant et Varié</title>
+
+<style>
+@import url("https://fonts.googleapis.com/css?family=Inter:400|Jura:400");
+
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+:root {
+    --c: 238, 199, 99;
+    --t: 204, 204, 204;
+    --cursor-color: 255, 255, 255;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #000;
+    margin: 0;
+    font-family: "Jura";
+    color: rgb(var(--t));
+    position: relative;
+    cursor: none;
+}
+
+::selection {
+    background-color: rgb(255, 255, 255);
+    color: #000000;
+}
+
+.scrollable-content {
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollable-content::-webkit-scrollbar {
+    display: none;
+}
+
+h1, h2, h3, p {
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 5rem;
+    margin: 0 0 3rem 0;
+    text-align: center;
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin: 2rem 0 1rem 0;
+}
+
+h3 {
+    font-size: 1.8rem;
+    margin: 1.5rem 0 0.8rem 0;
+}
+
+p {
+    line-height: 200%;
+    margin-bottom: 1.5rem;
+}
+
+main {
+    border-style: solid;
+    border-color: rgb(var(--t), 0.2);
+    border-width: 0 1px 0 1px;
+    width: 60%;
+    height: auto;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    background-color: rgb(var(--t), 0.2);
+}
+
+.top {
+    top: 2rem;
+}
+
+.bottom {
+    bottom: 2rem;
+}
+
+article {
+    position: relative;
+    margin: 4rem 0;
+}
+
+a {
+    color: rgb(var(--c));
+    text-decoration: none;
+}
+
+.custom-cursor {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgb(var(--cursor-color));
+    border-radius: 50%;
+    background-color: transparent;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, background-color 0.3s, opacity 0.3s, border-color 0.3s;
+    z-index: 9999;
+    mix-blend-mode: difference;
+}
+
+.custom-cursor::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgb(var(--cursor-color));
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+}
+
+.cursor-dot {
+    width: 6px;
+    height: 6px;
+    background-color: rgb(var(--cursor-color));
+    border-radius: 50%;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    transition: width 0.2s, height 0.2s, opacity 0.3s;
+}
+
+.expand {
+    width: 60px;
+    height: 60px;
+    border-color: rgb(var(--cursor-color));
+    mix-blend-mode: normal;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+@media screen and (max-width: 850px) {
+    main {
+        width: 90%;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    h1 {
+        font-size: 3rem;
+    }
     
-    <!-- Balise pour les styles CSS -->
-    <style>
-        @import url("https://fonts.googleapis.com/css?family=Inter:400|Jura:400");
-
-        * {
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
-        :root {
-            --c: 238, 199, 99;
-            --t: 204, 204, 204;
-        }
-
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            background-color: #000;
-            margin: 0;
-            font-family: "Jura";
-            color: rgb(var(--t));
-            position: relative;
-        }
-
-        .scrollable-content {
-            width: 100vw;
-            height: 100vh;
-            overflow: auto; /* Permet le défilement du contenu */
-            -ms-overflow-style: none;  /* Masquer les barres de défilement pour IE et Edge */
-            scrollbar-width: none; /* Masquer les barres de défilement pour Firefox */
-        }
-
-        .scrollable-content::-webkit-scrollbar {
-            display: none; /* Masquer les barres de défilement pour WebKit */
-        }
-
-        h1,
-        h2,
-        h3,
-        p {
-            font-weight: normal;
-        }
-
-        h1 {
-            font-size: 5rem;
-            margin: 0 0 3rem 0;
-            text-align: center;
-        }
-
-        p {
-            line-height: 200%;
-            margin-bottom: 3rem;
-        }
-
-        .scroll {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 1.2rem;
-            gap: 1rem;
-            position: fixed;
-            bottom: 3rem;
-            right: 3rem;
-            cursor: pointer;
-            transition: all ease 0.3s;
-        }
-
-        .text {
-            text-shadow: 0 0 20px 1px rgb(var(--c), 1);
-            color: rgb(var(--c));
-            font-family: "Jura";
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column-reverse;
-            align-items: flex-end;
-            gap: 0.5rem;
-        }
-
-        .rectangle {
-            opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            transform: translateY(20px);
-            box-shadow: 0 0 200px 5px rgb(var(--c), 1), 0 0 20px 1px rgb(var(--c), 0.3);
-        }
-
-        .rectangle:first-child {
-            opacity: 1;
-            transform: translateY(0);
-            background-color: rgba(var(--c), 1);
-        }
-
-        .scroll:hover .rectangle:not(:first-child) {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .rectangle:nth-child(1) {
-            width: 100px;
-            height: 15px;
-        }
-        .rectangle:nth-child(2) {
-            width: 70px;
-            height: 12px;
-            transition-delay: 0.05s;
-            background-color: rgba(var(--c), 0.9);
-        }
-        .rectangle:nth-child(3) {
-            width: 50px;
-            height: 9px;
-            transition-delay: 0.1s;
-            background-color: rgba(var(--c), 0.8);
-        }
-        .rectangle:nth-child(4) {
-            width: 40px;
-            height: 7px;
-            transition-delay: 0.15s;
-            background-color: rgba(var(--c), 0.7);
-        }
-        .rectangle:nth-child(5) {
-            width: 32px;
-            height: 6px;
-            transition-delay: 0.2s;
-            background-color: rgba(var(--c), 0.6);
-        }
-        .rectangle:nth-child(6) {
-            width: 28px;
-            height: 5px;
-            transition-delay: 0.25s;
-            background-color: rgba(var(--c), 0.5);
-        }
-        .rectangle:nth-child(7) {
-            width: 25px;
-            height: 4px;
-            transition-delay: 0.3s;
-            background-color: rgba(var(--c), 0.4);
-        }
-        .rectangle:nth-child(8) {
-            width: 22px;
-            height: 3px;
-            transition-delay: 0.35s;
-            background-color: rgba(var(--c), 0.3);
-        }
-        .scroll:not(:hover) .rectangle:nth-child(2) {
-            transition-delay: 0.35s;
-        }
-        .scroll:not(:hover) .rectangle:nth-child(3) {
-            transition-delay: 0.3s;
-        }
-        .scroll:not(:hover) .rectangle:nth-child(4) {
-            transition-delay: 0.25s;
-        }
-        .scroll:not(:hover) .rectangle:nth-child(5) {
-            transition-delay: 0.2s;
-        }
-        .scroll:not(:hover) .rectangle:nth-child(6) {
-            transition-delay: 0.15s;
-        }
-        .scroll:not(:hover) .rectangle:nth-child(7) {
-            transition-delay: 0.05s;
-        }
-        .scroll:not(:hover) .rectangle:nth-child(8) {
-            transition-delay: 0s;
-        }
-
-        /* extra */
-
-        main {
-            border-style: solid;
-            border-color: rgb(var(--t), 0.2);
-            border-width: 0 1px 0 1px;
-            width: 60%;
-            height: auto;
-            margin: 0 15rem;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-        }
-
-        .line {
-            width: 100%;
-            height: 1px;
-            position: relative;
-            background-color: rgb(var(--t), 0.2);
-        }
-
-        .top {
-            top: 5rem;
-        }
-
-        .bottom {
-            bottom: 5rem;
-        }
-
-        article {
-            position: relative;
-            margin: 10rem 4rem;
-        }
-
-        a {
-            color: rgb(var(--c));
-            text-decoration: none;
-        }
-
-        @media screen and (max-width: 850px) {
-            main {
-                width: 100%;
-                margin: 0 5rem;
-            }
-            
-            .ruler {
-                left: 0rem !important;
-            }
-        }
-
-        .ruler {
-            width: 2rem;
-            height: 100%;
-            position: absolute;
-            left: 4rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .lines {
-            width: 1px;
-            height: 100%;
-            background-color: rgb(var(--c), 0.2);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: absolute;
-        }
-
-        .lines span {
-            width: 1rem;
-            background-color: rgb(var(--c), 0.4);
-            height: 1px;
-            position: absolute;
-        }
-
-        .mask {
-            position: fixed;
-            height: 10%;
-            width: 1rem;
-            background-color: #000;
-            z-index: 500;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-size: 1rem;
-            color: rgb(var(--c));
-        }
-
-        .one {
-            top: 0;
-            border-width: 0 0 1px 0;
-            border-color: rgb(var(--c));
-            border-style: solid;
-        }
-
-        .two {
-            bottom: 0;
-            border-width: 1px 0 0px 0;
-            border-color: rgb(var(--c));
-            border-style: solid;
-        }
-
-        .lines span:nth-child(1) {
-            top: 4%;
-        }
-
-        .lines span:nth-child(2) {
-            top: 8%;
-        }
-
-        .lines span:nth-child(3) {
-            top: 12%;
-        }
-
-        .lines span:nth-child(4) {
-            top: 16%;
-        }
-
-        .lines span:nth-child(5) {
-            top: 20%;
-        }
-
-        .lines span:nth-child(6) {
-            top: 24%;
-        }
-
-        .lines span:nth-child(7) {
-            top: 28%;
-        }
-
-        .lines span:nth-child(8) {
-            top: 32%;
-        }
-
-        .lines span:nth-child(9) {
-            top: 36%;
-        }
-
-        .lines span:nth-child(10) {
-            top: 40%;
-        }
-
-        .lines span:nth-child(11) {
-            top: 44%;
-        }
-
-        .lines span:nth-child(12) {
-            top: 48%;
-        }
-
-        .lines span:nth-child(13) {
-            top: 52%;
-        }
-
-        .lines span:nth-child(14) {
-            top: 56%;
-        }
-
-        .lines span:nth-child(15) {
-            top: 60%;
-        }
-
-        .lines span:nth-child(16) {
-            top: 64%;
-        }
-
-        .lines span:nth-child(17) {
-            top: 68%;
-        }
-
-        .lines span:nth-child(18) {
-            top: 72%;
-        }
-
-        .lines span:nth-child(19) {
-            top: 76%;
-        }
-
-        .lines span:nth-child(20) {
-            top: 80%;
-        }
-
-        .lines span:nth-child(21) {
-            top: 84%;
-        }
-
-        .lines span:nth-child(22) {
-            top: 88%;
-        }
-
-        .lines span:nth-child(23) {
-            top: 92%;
-        }
-
-        .lines span:nth-child(24) {
-            top: 96%;
-        }
-
-        @media screen and (max-width: 500px) {
-            .scroll {
-                font-size: 1rem;
-                bottom: 1rem;
-                right: 1rem;
-            }
-
-            .mask {
-                display: none;
-            }
-        }
-    </style>
+    h2 {
+        font-size: 2rem;
+    }
+    
+    h3 {
+        font-size: 1.5rem;
+    }
+}
+</style>
 </head>
 
 <body>
-    <!-- Conteneur principal du contenu défilable -->
+    <div class="custom-cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursor-dot"></div>
     <div class="scrollable-content">
         <main>
             <div class="line top"></div>
             <article>
-              <h1 id="les-sciences-un-monde-fascinant-et-vari-"># SCIENCES</h1>
+              <h1 id="les-sciences-un-monde-fascinant-et-varie"># SCIENCES</h1>
               <h2 id="introduction">Introduction</h2>
-              <p>Les sciences représentent un domaine vaste et fascinant, englobant une multitude de disciplines qui visent à comprendre et à expliquer le monde qui nous entoure. De la physique à la biologie, en passant par la chimie et les sciences de la Terre, chaque branche des sciences offre un aperçu unique de l&#39;univers et de son fonctionnement. Dans ce texte, nous explorerons la beauté et l&#39;importance des sciences, en mettant en lumière certains de leurs aspects les plus intéressants et en soulignant leur impact sur notre vie quotidienne.</p>
-              <h2 id="la-physique-ma-tre-de-l-univers">La Physique : Maître de l&#39;Univers</h2>
-              <p>La physique est souvent considérée comme la science fondamentale qui cherche à comprendre les principes les plus fondamentaux de l&#39;univers. Des lois de la mécanique classique formulées par Newton aux théories de la relativité d&#39;Einstein, la physique a changé notre façon de voir le monde. Aujourd&#39;hui, des domaines tels que la mécanique quantique et la théorie des cordes poussent les limites de notre compréhension, nous offrant un aperçu du comportement des particules subatomiques et de la nature de l&#39;espace-temps.</p>
-              <h3 id="l-exp-rience-de-la-double-fente">L&#39;Expérience de la Double Fente</h3>
-              <p>L&#39;une des expériences les plus célèbres en physique est l&#39;expérience de la double fente, qui illustre le comportement ondulatoire et particulaire de la lumière et de la matière. En faisant passer des particules à travers une barrière contenant deux fentes, les scientifiques ont observé un motif d&#39;interférence, indiquant que les particules se comportaient comme des ondes. Cette expérience a remis en question nos conceptions classiques de la réalité et a ouvert la voie à la mécanique quantique.</p>
-              <h2 id="la-chimie-la-magie-des-mol-cules">La Chimie : La Magie des Molécules</h2>
-              <p>La chimie, quant à elle, est la science des molécules et de leurs réactions. Elle explore la manière dont les éléments s&#39;unissent pour former des composés, et comment ces réactions peuvent être manipulées pour créer de nouveaux matériaux et médicaments. Des équations complexes aux réactions colorées en passant par la découverte de nouveaux éléments, la chimie est une science fascinante qui a un impact profond sur notre monde.</p>
-              <h3 id="la-table-p-riodique-des-l-ments">La Table Périodique des Éléments</h3>
-              <p>L&#39;un des outils les plus célèbres de la chimie est la table périodique des éléments. Conçue par Dmitri Mendeleïev en 1869, cette table organise tous les éléments connus en fonction de leurs propriétés chimiques et physiques. La table périodique est un outil puissant qui permet aux chimistes de prédire le comportement des éléments et de découvrir de nouvelles réactions.</p>
-              <h2 id="les-sciences-de-la-vie-d-couvrir-le-monde-vivant">Les Sciences de la Vie : Découvrir le Monde Vivant</h2>
-              <p>Les sciences de la vie, y compris la biologie, la botanique et la zoologie, explorent la diversité incroyable de la vie sur Terre. De l&#39;étude des cellules et des gènes à l&#39;observation du comportement animal, ces sciences nous aident à comprendre les mécanismes complexes qui sous-tendent la vie.</p>
-              <h3 id="la-s-quence-du-g-nome-humain">La Séquence du Génome Humain</h3>
-              <p>L&#39;un des accomplissements les plus remarquables des sciences de la vie est la séquence du génome humain. Ce projet monumental, achevé en 2003, a impliqué le séquençage de plus de 3 milliards de paires de bases d&#39;ADN, nous donnant un aperçu sans précédent de notre code génétique. Cette découverte a révolutionné la médecine et la recherche sur les maladies, ouvrant de nouvelles voies pour le traitement et la prévention des maladies.</p>
-              <h2 id="les-sciences-de-la-terre-comprendre-notre-plan-te">Les Sciences de la Terre : Comprendre Notre Planète</h2>
-              <p>Les sciences de la Terre, telles que la géologie, la météorologie et l&#39;océanographie, nous aident à comprendre la planète sur laquelle nous vivons. Ils étudient les processus qui façonnent notre environnement, des montagnes aux océans en passant par l&#39;atmosphère.</p>
-              <h3 id="l-tude-des-tremblements-de-terre">L&#39;Étude des Tremblements de Terre</h3>
-              <p>L&#39;étude des tremblements de terre est un aspect crucial des sciences de la Terre. Les sismologues utilisent des outils sophistiqués pour étudier les mouvements des plaques tectoniques et prédire les zones à risque de tremblements de terre. Cette recherche est essentielle pour aider les communautés à se préparer et à réagir à ces événements dévastateurs.</p>
+              <p>Les sciences représentent un domaine vaste et fascinant, englobant une multitude de disciplines qui visent à comprendre et à expliquer le monde qui nous entoure. De la physique à la biologie, en passant par la chimie et les sciences de la Terre, chaque branche des sciences offre un aperçu unique de l'univers et de son fonctionnement. Dans ce texte, nous explorerons la beauté et l'importance des sciences, en mettant en lumière certains de leurs aspects les plus intéressants et en soulignant leur impact sur notre vie quotidienne.</p>
+              <h2 id="la-physique-maitre-de-l-univers">La Physique : Maître de l'Univers</h2>
+              <p>La physique est souvent considérée comme la science fondamentale qui cherche à comprendre les principes les plus fondamentaux de l'univers. Des lois de la mécanique classique formulées par Newton aux théories de la relativité d'Einstein, la physique a changé notre façon de voir le monde. Aujourd'hui, des domaines tels que la mécanique quantique et la théorie des cordes poussent les limites de notre compréhension, nous offrant un aperçu du comportement des particules subatomiques et de la nature de l'espace-temps.</p>
+              <h3 id="l-experience-de-la-double-fente">L'Expérience de la Double Fente</h3>
+              <p>L'une des expériences les plus célèbres en physique est l'expérience de la double fente, qui illustre le comportement ondulatoire et particulaire de la lumière et de la matière. En faisant passer des particules à travers une barrière contenant deux fentes, les scientifiques ont observé un motif d'interférence, indiquant que les particules se comportaient comme des ondes. Cette expérience a remis en question nos conceptions classiques de la réalité et a ouvert la voie à la mécanique quantique.</p>
+              <h2 id="la-chimie-la-magie-des-molecules">La Chimie : La Magie des Molécules</h2>
+              <p>La chimie, quant à elle, est la science des molécules et de leurs réactions. Elle explore la manière dont les éléments s'unissent pour former des composés, et comment ces réactions peuvent être manipulées pour créer de nouveaux matériaux et médicaments. Des équations complexes aux réactions colorées en passant par la découverte de nouveaux éléments, la chimie est une science fascinante qui a un impact profond sur notre monde.</p>
+              <h3 id="la-table-periodique-des-elements">La Table Périodique des Éléments</h3>
+              <p>L'un des outils les plus célèbres de la chimie est la table périodique des éléments. Conçue par Dmitri Mendeleïev en 1869, cette table organise tous les éléments connus en fonction de leurs propriétés chimiques et physiques. La table périodique est un outil puissant qui permet aux chimistes de prédire le comportement des éléments et de découvrir de nouvelles réactions.</p>
+              <h2 id="les-sciences-de-la-vie-decouvrir-le-monde-vivant">Les Sciences de la Vie : Découvrir le Monde Vivant</h2>
+              <p>Les sciences de la vie, y compris la biologie, la botanique et la zoologie, explorent la diversité incroyable de la vie sur Terre. De l'étude des cellules et des gènes à l'observation du comportement animal, ces sciences nous aident à comprendre les mécanismes complexes qui sous-tendent la vie.</p>
+              <h3 id="la-sequence-du-genome-humain">La Séquence du Génome Humain</h3>
+              <p>L'un des accomplissements les plus remarquables des sciences de la vie est la séquence du génome humain. Ce projet monumental, achevé en 2003, a impliqué le séquençage de plus de 3 milliards de paires de bases d'ADN, nous donnant un aperçu sans précédent de notre code génétique. Cette découverte a révolutionné la médecine et la recherche sur les maladies, ouvrant de nouvelles voies pour le traitement et la prévention des maladies.</p>
+              <h2 id="les-sciences-de-la-terre-comprendre-notre-planete">Les Sciences de la Terre : Comprendre Notre Planète</h2>
+              <p>Les sciences de la Terre, telles que la géologie, la météorologie et l'océanographie, nous aident à comprendre la planète sur laquelle nous vivons. Ils étudient les processus qui façonnent notre environnement, des montagnes aux océans en passant par l'atmosphère.</p>
+              <h3 id="l-etude-des-tremblements-de-terre">L'Étude des Tremblements de Terre</h3>
+              <p>L'étude des tremblements de terre est un aspect crucial des sciences de la Terre. Les sismologues utilisent des outils sophistiqués pour étudier les mouvements des plaques tectoniques et prédire les zones à risque de tremblements de terre. Cette recherche est essentielle pour aider les communautés à se préparer et à réagir à ces événements dévastateurs.</p>
               <h2 id="conclusion">Conclusion</h2>
-              <p>Les sciences représentent un domaine incroyablement vaste et diversifié, offrant une compréhension profonde du monde qui nous entoure. De la physique à la chimie, en passant par les sciences de la vie et de la Terre, chaque discipline nous fournit des outils et des connaissances pour améliorer notre vie et notre compréhension de l&#39;univers. En continuant à explorer et à découvrir, nous pouvons repousser les limites de la science et façonner un avenir plus lumineux pour notre planète.</p>
+              <p>Les sciences représentent un domaine incroyablement vaste et diversifié, offrant une compréhension profonde du monde qui nous entoure. De la physique à la chimie, en passant par les sciences de la vie et de la Terre, chaque discipline nous fournit des outils et des connaissances pour améliorer notre vie et notre compréhension de l'univers. En continuant à explorer et à découvrir, nous pouvons repousser les limites de la science et façonner un avenir plus lumineux pour notre planète.</p>
             </article>
             <div class="line bottom"></div>
         </main>
-
     </div>
+
+    <script>
+    const cursor = document.getElementById('cursor');
+    const cursorDot = document.getElementById('cursor-dot');
+    let mouseX = 0;
+    let mouseY = 0;
+    let cursorX = 0;
+    let cursorY = 0;
+    let dotX = 0;
+    let dotY = 0;
+    let lastMoveTime = Date.now();
+    let cursorVisible = true;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        lastMoveTime = Date.now();
+        if (!cursorVisible) {
+            cursorVisible = true;
+            cursor.classList.remove('hidden');
+            cursorDot.classList.remove('hidden');
+        }
+    });
+
+    function updateCursor() {
+        const deltaX = mouseX - cursorX;
+        const deltaY = mouseY - cursorY;
+
+        cursorX += deltaX * 0.1;
+        cursorY += deltaY * 0.1;
+        cursor.style.left = `${cursorX}px`;
+        cursor.style.top = `${cursorY}px`;
+
+        dotX += (mouseX - dotX) * 0.5;
+        dotY += (mouseY - dotY) * 0.5;
+        cursorDot.style.left = `${dotX}px`;
+        cursorDot.style.top = `${dotY}px`;
+
+        if (Date.now() - lastMoveTime > 300 && cursorVisible) {
+            cursorVisible = false;
+            cursor.classList.add('hidden');
+            cursorDot.classList.add('hidden');
+        }
+
+        requestAnimationFrame(updateCursor);
+    }
+
+    updateCursor();
+
+    const interactiveElements = document.querySelectorAll('button, a, input, textarea');
+
+    interactiveElements.forEach((el) => {
+        el.addEventListener('mouseenter', () => {
+            cursor.classList.add('expand');
+            cursorDot.style.width = '0px';
+            cursorDot.style.height = '0px';
+        });
+
+        el.addEventListener('mouseleave', () => {
+            cursor.classList.remove('expand');
+            cursorDot.style.width = '6px';
+            cursorDot.style.height = '6px';
+        });
+    });
+    </script>
 </body>
 </html>

@@ -1,73 +1,97 @@
-<html>
-<head>
-  <base href="https://www.GPT5.ai?">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ChatGPT Interface</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Playwrite+CA:wght@100..400&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+<html><head><base href="https://www.GPT5.ai?">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChatGPT Interface Futuriste</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg-color: #000;
-  --chat-bg: #ffffff; /* Couleur de fond des messages */
-  --header-bg: #000;
-  --input-bg: transparent; /* Fond de la zone de texte transparent */
-  --text-color: #000; /* Couleur du texte */
-  --border-color: #ffffff; /* Bordures blanches */
+  --bg-color: #000000;
+  --chat-bg: #000;
+  --header-bg: #0a0a0a;
+  --input-bg: #1a1a1a;
+  --text-color: #ffffff;
+  --border-color: #333333;
   --accent-color: #ffffff;
-  --secondary-text: #ffffff; /* Texte secondaire en blanc */
-  --code-bg: #000000;
-  --code-text: #ffffff;
-  --sidebar-bg: #000;
-  --sidebar-hover: #2a2a2a;
+  --secondary-text: #cccccc;
+  --code-bg: #000;
+  --code-text: #f0f0f0;
+  --sidebar-bg: #0a0a0a;
+  --sidebar-hover: #1a1a1a;
+  --neon-glow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ffffff;
+  --selection-color: #ffffff;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: 'Orbitron', sans-serif;
+  cursor: none;
 }
 
 body, html {
   height: 100%;
   background-color: var(--bg-color);
   color: var(--text-color);
+  overflow: hidden;
+}
+
+::selection {
+  background-color: var(--selection-color);
+  color: var(--bg-color);
+}
+
+::-moz-selection {
+  background-color: var(--selection-color);
+  color: var(--bg-color);
 }
 
 .app-container {
   display: flex;
   height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
 .sidebar {
-  width: 260px;
+  width: 280px;
   background-color: var(--sidebar-bg);
   padding: 1rem;
   overflow-y: auto;
-  border-right: 1px solid var(--border-color); /* Ligne blanche verticale */
+  border-right: 1px solid var(--border-color);
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  z-index: 10;
 }
 
-.new-chat-btn, .edit-btn, .delete-btn, .send-btn {
-  background-color: transparent; /* Fond transparent */
-  color: var(--accent-color); /* Texte en blanc */
-  border: 2px solid var(--accent-color); /* Bordure blanche */
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-  padding: 0.75rem;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s, text-shadow 0.2s; /* Ajout de text-shadow dans la transition */
+.sidebar.collapsed {
+  width: 60px;
+  padding: 1rem 0;
 }
 
-.new-chat-btn:hover, .edit-btn:hover, .delete-btn:hover, .send-btn:hover {
-  background-color: var(--sidebar-hover); /* Fond légèrement sombre au survol */
-  color: var(--accent-color); /* Texte en blanc au survol */
-  border-color: var(--accent-color); /* Bordure blanche au survol */
-  text-shadow: 0 0 10px var(--accent-color); /* Ombre portée légère sur le texte */
+.new-chat-btn, .edit-btn, .delete-btn, .send-btn, .toggle-sidebar-btn {
+  background-color: transparent;
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: none;
+  padding: 0.5rem 0.75rem;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.new-chat-btn:hover, .edit-btn:hover, .delete-btn:hover, .send-btn:hover, .toggle-sidebar-btn:hover {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+  box-shadow: var(--neon-glow);
 }
 
 .conversation-list {
   list-style-type: none;
+  margin-top: 1rem;
 }
 
 .conversation-item {
@@ -75,14 +99,16 @@ body, html {
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem;
-  cursor: pointer;
-  border-radius: 0.5rem;
+  cursor: none;
+  border-radius: 4px;
   margin-bottom: 0.5rem;
-  transition: background-color 0.2s;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
 }
 
 .conversation-item:hover {
   background-color: var(--sidebar-hover);
+  border-color: var(--accent-color);
 }
 
 .conversation-title {
@@ -91,7 +117,8 @@ body, html {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--accent-color); /* Titre des conversations en blanc */
+  color: var(--text-color);
+  transition: all 0.3s ease;
 }
 
 .conversation-actions {
@@ -105,16 +132,39 @@ body, html {
   flex-direction: column;
   height: 100vh;
   background-color: var(--bg-color);
+  position: relative;
+  overflow: hidden;
 }
 
 .chat-header {
   background-color: var(--header-bg);
-  color: var(--accent-color); /* Texte ChatGPT en blanc */
+  color: var(--accent-color);
   padding: 1rem;
   text-align: center;
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 700;
-  text-shadow: 0 0 15px var(--accent-color); /* Surbrillance permanente */
+  text-shadow: var(--neon-glow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 5;
+}
+
+.chat-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--accent-color), transparent);
+  animation: neonPulse 2s infinite;
+}
+
+@keyframes neonPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 .chat-messages {
@@ -123,87 +173,273 @@ body, html {
   padding: 1rem;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.chat-messages::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .message {
   max-width: 80%;
   margin-bottom: 1rem;
-  padding: 0.8rem;
-  border-radius: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
   line-height: 1.4;
-  background-color: var(--chat-bg); /* Fond des messages en blanc */
-  color: var(--text-color); /* Texte des messages en noir */
+  animation: fadeIn 0.5s ease-out, glowPulse 2s infinite alternate;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glowPulse {
+  from { box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+  to { box-shadow: 0 0 15px rgba(255, 255, 255, 0.8); }
 }
 
 .user-message {
   align-self: flex-end;
+  background-color: var(--accent-color);
+  color: var(--bg-color);
 }
 
 .gpt5-message {
   align-self: flex-start;
+  background-color: var(--chat-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.message::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  width: 20px;
+  height: 20px;
+  background-color: inherit;
+  border-radius: 4px;
+  transform: rotate(45deg);
+}
+
+.user-message::before {
+  right: 20px;
+}
+
+.gpt5-message::before {
+  left: 20px;
 }
 
 .chat-input {
   display: flex;
   padding: 1rem;
-  background-color: var(--bg-color);
+  background-color: var(--input-bg);
   border-top: 1px solid var(--border-color);
+  position: relative;
+  z-index: 5;
 }
 
 .chat-input textarea {
   flex-grow: 1;
   padding: 0.75rem;
-  border: 1px solid var(--border-color); /* Bordures blanches */
-  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
   font-size: 1rem;
-  background-color: var(--input-bg); /* Fond de la zone de texte transparent */
-  color: var(--text-color); /* Texte par défaut en noir */
+  background-color: var(--bg-color);
+  color: var(--text-color);
   resize: none;
   min-height: 60px;
   max-height: 200px;
+  transition: all 0.3s ease;
 }
 
 .chat-input textarea:focus {
   outline: none;
-  box-shadow: 0 0 0 2px var(--accent-color);
-}
-
-.chat-input textarea.typing {
-  color: var(--accent-color); /* Texte en blanc lors de la saisie */
+  border-color: var(--accent-color);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 pre {
   background-color: var(--code-bg);
   color: var(--code-text);
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 4px;
   overflow-x: auto;
+  margin: 1rem 0;
+  border: 1px solid var(--border-color);
+  position: relative;
+}
+
+pre::before {
+  content: 'Code';
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+  padding: 0 5px;
+  font-size: 0.8rem;
+  border-radius: 3px;
 }
 
 code {
-  font-family: 'Roboto Condensed', monospace;
+  font-family: 'Fira Code', monospace;
 }
 
-  </style>
+.toggle-sidebar-btn {
+  position: absolute;
+  z-index: 10;
+  padding: 0.5rem;
+  font-size: 1rem;
+  line-height: 1;
+  top: 1rem;
+  left: 1rem;
+}
+
+.grid-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: -1;
+  animation: gridPulse 10s infinite alternate;
+}
+
+@keyframes gridPulse {
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  background-color: var(--accent-color);
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: float 15s infinite linear;
+}
+
+@keyframes float {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-100vh) rotate(360deg); }
+}
+
+.cursor {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--accent-color);
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: all 0.1s ease;
+  transition-property: width, height, border, opacity;
+  z-index: 9999;
+  mix-blend-mode: difference;
+}
+
+.cursor::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--accent-color);
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9999;
+  transition: width 0.2s, height 0.2s, opacity 0.3s;
+}
+
+.expand {
+  width: 60px;
+  height: 60px;
+  border-width: 3px;
+  mix-blend-mode: normal;
+}
+
+.magnetic-item {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: absolute;
+    left: -280px;
+  }
+
+  .sidebar.collapsed {
+    left: 0;
+  }
+
+  .chat-container {
+    width: 100%;
+  }
+}
+
+</style>
 </head>
 <body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="grid-background"></div>
+  <div class="particles" id="particles"></div>
   <div class="app-container">
-    <div class="sidebar">
-      <button class="new-chat-btn">Nouvelle conversation</button>
+    <button id="toggleSidebar" class="toggle-sidebar-btn magnetic-item" title="Toggle Sidebar">☰</button>
+    <div class="sidebar" id="sidebar">
+      <button class="new-chat-btn magnetic-item">New Chat</button>
       <ul class="conversation-list" id="conversationList">
         <!-- Les conversations seront ajoutées ici dynamiquement -->
       </ul>
     </div>
     <div class="chat-container">
       <div class="chat-header">
-        ChatGPT
+        <span>ChatGPT</span>
       </div>
       <div class="chat-messages" id="chatMessages">
         <!-- Les messages seront ajoutés ici dynamiquement -->
       </div>
       <form id="chatForm" class="chat-input">
-        <textarea id="userInput" placeholder="Tapez votre message ici..." required></textarea>
-        <button type="submit" class="send-btn">Envoyer</button>
+        <textarea id="userInput" placeholder="Type your message here..." required></textarea>
+        <button type="submit" class="send-btn magnetic-item">Send</button>
       </form>
     </div>
   </div>
@@ -214,6 +450,11 @@ code {
     const userInput = document.getElementById('userInput');
     const conversationList = document.getElementById('conversationList');
     const newChatBtn = document.querySelector('.new-chat-btn');
+    const toggleSidebarBtn = document.getElementById('toggleSidebar');
+    const sidebar = document.getElementById('sidebar');
+    const particles = document.getElementById('particles');
+    const cursor = document.getElementById('cursor');
+    const cursorDot = document.getElementById('cursor-dot');
 
     let conversations = [];
     let currentConversationId = null;
@@ -235,10 +476,16 @@ code {
     }
 
     async function getGPT5Response(message) {
-      // Dans une implémentation réelle, cela ferait un appel API à GPT-5
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve("AI COMING SOON, have a good day ! ;)");
+          const responses = [
+            "Analyzing your request. Processing...",
+            "Interesting input. Generating response...",
+            "Query received. Formulating answer...",
+            "Data processed. Providing information:"
+          ];
+          const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+          resolve(randomResponse + "\n\nAI integration pending. Thank you for your patience.");
         }, 1000);
       });
     }
@@ -258,10 +505,10 @@ code {
       const conversationItem = document.createElement('li');
       conversationItem.classList.add('conversation-item');
       conversationItem.innerHTML = `
-        <span class="conversation-title">${conversations[conversationId].title}</span>
+        <span class="conversation-title magnetic-item">${conversations[conversationId].title}</span>
         <div class="conversation-actions">
-          <button class="edit-btn" title="">Edit</button>
-          <button class="delete-btn" title="">Delete</button>
+          <button class="edit-btn magnetic-item" title="Edit">✎</button>
+          <button class="delete-btn magnetic-item" title="Delete">×</button>
         </div>
       `;
       conversationItem.querySelector('.conversation-title').addEventListener('click', () => switchToConversation(conversationId));
@@ -274,6 +521,7 @@ code {
         deleteConversation(conversationId);
       });
       conversationList.appendChild(conversationItem);
+      applyMagneticEffect(conversationItem.querySelectorAll('.magnetic-item'));
     }
 
     function switchToConversation(conversationId) {
@@ -285,7 +533,7 @@ code {
     }
 
     function editConversationTitle(conversationId) {
-      const newTitle = prompt("Entrez le nouveau titre de la conversation:", conversations[conversationId].title);
+      const newTitle = prompt("Enter the new conversation title:", conversations[conversationId].title);
       if (newTitle && newTitle.trim() !== "") {
         conversations[conversationId].title = newTitle.trim();
         updateConversationList();
@@ -293,7 +541,7 @@ code {
     }
 
     function deleteConversation(conversationId) {
-      if (confirm("Êtes-vous sûr de vouloir supprimer cette conversation ?")) {
+      if (confirm("Are you sure you want to delete this conversation?")) {
         conversations.splice(conversationId, 1);
         updateConversationList();
         if (currentConversationId === conversationId) {
@@ -326,20 +574,124 @@ code {
 
     newChatBtn.addEventListener('click', createNewConversation);
 
-    // Ajuster automatiquement la hauteur du textarea
     userInput.addEventListener('input', function() {
       this.style.height = 'auto';
       this.style.height = (this.scrollHeight) + 'px';
-      // Ajouter la classe pour changer la couleur du texte lors de la saisie
-      this.classList.add('typing');
     });
 
-    userInput.addEventListener('blur', function() {
-      // Retirer la classe lorsque l'utilisateur arrête de taper
-      this.classList.remove('typing');
+    toggleSidebarBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
     });
 
-    // Créer une première conversation au chargement de la page
+    function createParticles() {
+      particles.innerHTML = '';
+      const particleCount = 50;
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        particle.style.width = `${Math.random() * 3 + 1}px`;
+        particle.style.height = particle.style.width;
+        particle.style.opacity = Math.random() * 0.5 + 0.1;
+        particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        particles.appendChild(particle);
+      }
+    }
+
+    createParticles();
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let cursorX = 0;
+    let cursorY = 0;
+    let dotX = 0;
+    let dotY = 0;
+    let lastMoveTime = Date.now();
+    let cursorVisible = true;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      lastMoveTime = Date.now();
+      if (!cursorVisible) {
+        cursorVisible = true;
+        cursor.style.opacity = '1';
+        cursorDot.style.opacity = '1';
+      }
+    });
+
+    function updateCursor() {
+      const deltaX = mouseX - cursorX;
+      const deltaY = mouseY - cursorY;
+
+      cursorX += deltaX * 0.1;
+      cursorY += deltaY * 0.1;
+      cursor.style.left = `${cursorX}px`;
+      cursor.style.top = `${cursorY}px`;
+
+      dotX += (mouseX - dotX) * 0.5;
+      dotY += (mouseY - dotY) * 0.5;
+      cursorDot.style.left = `${dotX}px`;
+      cursorDot.style.top = `${dotY}px`;
+
+      // Check for inactivity
+      if (Date.now() - lastMoveTime > 100 && cursorVisible) {
+        cursorVisible = false;
+        cursor.style.opacity = '0';
+        cursorDot.style.opacity = '0';
+      }
+
+      requestAnimationFrame(updateCursor);
+    }
+
+    updateCursor();
+
+    const interactiveElements = document.querySelectorAll('button, .magnetic-item, a, input, textarea');
+
+    interactiveElements.forEach((el) => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.add('expand');
+        cursorDot.style.width = '0px';
+        cursorDot.style.height = '0px';
+      });
+
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('expand');
+        cursorDot.style.width = '6px';
+        cursorDot.style.height = '6px';
+      });
+    });
+
+    function applyMagneticEffect(elements) {
+      elements.forEach((el) => {
+        el.addEventListener('mousemove', (e) => {
+          const rect = el.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          const distanceX = e.clientX - centerX;
+          const distanceY = e.clientY - centerY;
+          const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+          const maxDistance = Math.max(rect.width, rect.height);
+          const strength = Math.min(distance / maxDistance, 1);
+
+          const moveX = distanceX * strength * 0.5;
+          const moveY = distanceY * strength * 0.5;
+
+          el.style.transform = `translate(${moveX}px, ${moveY}px)`;
+          cursor.style.transform = `translate(calc(-50% + ${moveX * 2}px), calc(-50% + ${moveY * 2}px))`;
+        });
+
+        el.addEventListener('mouseleave', () => {
+          el.style.transform = 'translate(0, 0)';
+          cursor.style.transform = 'translate(-50%, -50%)';
+        });
+      });
+    }
+
+    applyMagneticEffect(document.querySelectorAll('.magnetic-item'));
+
     createNewConversation();
   </script>
 </body>

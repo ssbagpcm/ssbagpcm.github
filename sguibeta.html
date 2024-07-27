@@ -14,6 +14,7 @@
             font-family: Arial, sans-serif;
             background-color: #000;
             color: #ffffff;
+            cursor: none; /* Cache le curseur par défaut */
         }
 
         #container {
@@ -41,11 +42,7 @@
             overflow: hidden;
         }
 
-        #left-section, #right-section {
-            background-color: #000;
-        }
-
-        #middle-section {
+        #left-section, #right-section, #middle-section {
             background-color: #000;
         }
 
@@ -72,6 +69,82 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
+        /* Styles pour le curseur personnalisé */
+        .cursor, .cursor-dot {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            transition: all 0.1s ease;
+            z-index: 9999;
+            mix-blend-mode: difference;
+        }
+
+        .cursor {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #ffffff;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.5;
+        }
+
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #ffffff;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            opacity: 0.5;
+        }
+
+        .expand {
+            width: 60px;
+            height: 60px;
+            border-width: 3px;
+            mix-blend-mode: normal;
+        }
+
+        .magnetic-item {
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Éléments pour la gestion de l'inactivité */
+        .cursor-hidden {
+            opacity: 0;
+        }
+
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+            animation: gridPulse 10s infinite alternate;
+        }
+
+        @keyframes gridPulse {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -95,10 +168,13 @@
         </div>
     </div>
 
-    <!-- Ajout de l'élément audio pour jouer le son en boucle -->
     <audio id="background-music" src="chemin/vers/votre_fichier.mp3" autoplay loop>
         Votre navigateur ne supporte pas l'élément audio.
     </audio>
+
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="grid-background"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -136,6 +212,86 @@
                     }
                 }
             });
+
+            // Gestion du curseur personnalisé
+            const cursor = document.getElementById('cursor');
+            const cursorDot = document.getElementById('cursor-dot');
+            let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, dotX = 0, dotY = 0;
+            let lastMoveTime = Date.now();
+            let cursorVisible = true;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                lastMoveTime = Date.now();
+                if (!cursorVisible) {
+                    cursorVisible = true;
+                    cursor.classList.remove('cursor-hidden');
+                    cursorDot.style.opacity = '1';
+                }
+            });
+
+            function updateCursor() {
+                const deltaX = mouseX - cursorX;
+                const deltaY = mouseY - cursorY;
+
+                cursorX += deltaX * 0.1;
+                cursorY += deltaY * 0.1;
+                cursor.style.left = `${cursorX}px`;
+                cursor.style.top = `${cursorY}px`;
+
+                dotX += (mouseX - dotX) * 0.5;
+                dotY += (mouseY - dotY) * 0.5;
+                cursorDot.style.left = `${dotX}px`;
+                cursorDot.style.top = `${dotY}px`;
+
+                if (Date.now() - lastMoveTime > 100 && cursorVisible) {
+                    cursorVisible = false;
+                    cursor.classList.add('cursor-hidden');
+                    cursorDot.style.opacity = '0';
+                }
+
+                requestAnimationFrame(updateCursor);
+            }
+
+            updateCursor();
+
+            const interactiveElements = document.querySelectorAll('button, .magnetic-item, a, input, textarea');
+
+            interactiveElements.forEach((el) => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.classList.add('expand');
+                    cursorDot.style.width = '0px';
+                    cursorDot.style.height = '0px';
+                });
+
+                el.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('expand');
+                    cursorDot.style.width = '6px';
+                    cursorDot.style.height = '6px';
+                });
+            });
+
+            function applyMagneticEffect(elements) {
+                elements.forEach(element => {
+                    element.addEventListener('mousemove', (event) => {
+                        const rect = element.getBoundingClientRect();
+                        const elementCenterX = rect.left + rect.width / 2;
+                        const elementCenterY = rect.top + rect.height / 2;
+                        const distanceX = (event.clientX - elementCenterX) * 0.1;
+                        const distanceY = (event.clientY - elementCenterY) * 0.1;
+
+                        element.style.transform = `translate(${distanceX}px, ${distanceY}px)`;
+                    });
+
+                    element.addEventListener('mouseleave', () => {
+                        element.style.transform = 'translate(0, 0)';
+                    });
+                });
+            }
+
+            applyMagneticEffect(document.querySelectorAll('.magnetic-item'));
+
         });
     </script>
 </body>
